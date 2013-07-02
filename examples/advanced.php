@@ -48,10 +48,10 @@
 		
 		define('DB_HOST', 'localhost'); // Usually localhost.
 		define('DB_HOST_PORT', 3306); // Default port is 3306.
-		define('DB_NAME', 'attendees'); // Database name.
+		define('DB_NAME', 'website'); // Database name.
 		define('DB_TABLE', 'attendees'); // Table name.
 		define('DB_USER', 'root');
-		define('DB_PASSWORD', '');
+		define('DB_PASSWORD', 'password');
 
 		define('MAIL_ACTIVE', false);
 		define('MAIL_SMTP', 'mail.yoursite.com'); // Mail server.
