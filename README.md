@@ -15,7 +15,7 @@ Copyright © Nathaniel Sabanski. Released under the zlib/libpng license.
 
 **Screenshot of Advanced Example:**
 
-<img src="http://i.imgur.com/Og0eTVN.png" alt="Simple PHP Form Example 1" />
+<img src="http://i.imgur.com/nlanA5R.png" alt="Simple PHP Form Example 1" />
 
 **SQL for creating the Advanced Example table:**
 
