@@ -10,14 +10,6 @@
 	$form->Add('text', 'username', '', array('required'), 'Screen Name', '', 'Your screen name is required.');
 	$form->Add('text', 'email', '', array('required', 'email'), 'Email', '', 'Your email is required.');
 	$form->Add('text', 'phone', '', array('phone'), 'Phone Number', 'We\'ll send you a quick reminder the day before the event!', 'Your phone number must be valid.');
-	
-	// Add text area.
-	$form->Add('textarea', 'suggestions', '', array(''), 'Suggestion Box', 'Have your voice heard!', '');
-	
-	// Add check box.
-	$form->Add('checkbox', 'notify', true, array(''), 'Notify me of future gaming events in my area.', '', '');
-	// Add check box.
-	$form->Add('checkbox', 'notify2', true, array(''), 'Notify me of future gaming events in my area.', '', '');
 
 	// Add drop down list.
 	$form->Add('dropdown', 'race', '', array('required'), 'Your Race', '', 'Your selection is required.');
@@ -31,6 +23,12 @@
 	$form->AddRadioButton('beverage', 'Coffee', 0);
 	$form->AddRadioButton('beverage', 'Tea', 1);
 	$form->AddRadioButton('beverage', 'Bawls', 2);
+
+	// Add text area.
+	$form->Add('textarea', 'suggestions', '', array(''), 'Suggestion Box', 'Have your voice heard!', '');
+	
+	// Add check box.
+	$form->Add('checkbox', 'notify', true, array(''), 'Notify me of future gaming events in my area.', '', '');
 
 	// Did the form validate successfully?
 	if($form->Validate())

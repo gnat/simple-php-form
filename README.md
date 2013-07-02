@@ -5,11 +5,15 @@ Open source automatic PHP form handling module with validation, helpers, warning
 
 Validation flags supported: required, email, phone, number, lengthmax *, lengthmin *, sizemax *, sizemin *
 
-See ./examples/basic.php and ./examples/advanced.php and ./examples/centered.php for usage.
+See <strong>./examples/basic.php</strong> and <strong>./examples/advanced.php</strong> and <strong>./examples/centered.php</strong> for usage.
 
 Copyright © Nathaniel Sabanski. Released under the zlib/libpng license.
 
-**SQL for creating the Advanced Example table**
+**Screenshot of Advanced Example:**
+
+<img src="http://i.imgur.com/oDBQBFm.png" alt="Simple PHP Form Example 1" />
+
+**SQL for creating the Advanced Example table:**
 
 <pre><code> CREATE TABLE `attendees` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -24,7 +28,7 @@ Copyright © Nathaniel Sabanski. Released under the zlib/libpng license.
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8; </code></pre>
 
-**zlib/libpng license**
+**zlib/libpng license:**
 
 This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software.
 
