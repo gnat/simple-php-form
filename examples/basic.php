@@ -1,6 +1,6 @@
 <?php 
 	// Simple PHP Form - Basic Example. The minimum amount of code to get running. 
-	require('../SimplePHPForm.class.php'); 
+	require('../SimplePHPForm.php'); 
 	
 	$form = new SimplePHPForm();
 

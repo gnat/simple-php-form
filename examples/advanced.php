@@ -1,7 +1,7 @@
 <?php 
 
 	// Simple PHP Form - Advanced Example. Full featured example showing off many configuration options and form submission code sample.
-	require('../SimplePHPForm.class.php'); 
+	require('../SimplePHPForm.php'); 
 	
 	// Create new SimplePHPForm with custom action URL.
 	$form = new SimplePHPForm('advanced.php');
