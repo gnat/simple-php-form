@@ -1,0 +1,65 @@
+/* SimplePHPForm Selectors - Optional Center-Aligned Style */
+
+.simplephpform
+{
+	margin-top: 20px;
+}
+
+.simplephpform_wrapper p
+{
+	text-align: center;
+}
+
+.simplephpform input[type="submit"]
+{
+	margin-left: 40%;
+}
+
+.simplephpform_title
+{
+	padding: 2px 6px 2px 2px;
+	clear:both;
+	float: left;
+	width: 40%;
+	text-align: right;
+}
+
+.simplephpform_help
+{
+	padding: 4px 0 6px 6px;
+	width: 60%;
+	margin-left: 40%;
+	display: block;
+	clear: both;
+}
+
+.simplephpform_error
+{
+	background: url('../images/warning_small.png') 6px 3px no-repeat;
+	padding: 4px 0 6px 26px;
+	width: 60%;
+	margin-left: 40%;
+	display: block;
+	clear: both;
+}
+
+.simplephpform_state_untouched
+{
+	background: none;
+	padding: 2px 0;
+	text-align: center;
+}
+
+.simplephpform_state_success
+{
+	background: none;
+	padding: 2px 0;
+	text-align: center;
+}
+
+.simplephpform_state_fail
+{
+	background: none;
+	padding: 2px 0;
+	text-align: center;
+}

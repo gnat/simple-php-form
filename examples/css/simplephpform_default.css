@@ -1,0 +1,132 @@
+/* Reset */
+* 
+{
+	margin: 0;
+	padding: 0;
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Base Selectors */
+body 
+{
+	font-size: 12px;
+	font-family: arial, helvetica, sans-serif;
+	background: #DDDDDD;
+	color: #000000;
+	padding: 20px;
+}
+
+/* SimplePHPForm Selectors */
+.simplephpform
+{
+}
+
+.simplephpform_wrapper 
+{
+	margin: 10px auto;
+	width: 600px;
+}
+
+.simplephpform_wrapper p
+{
+	padding: 10px 0;
+}
+
+.simplephpform_clear
+{
+	clear: both;
+}
+
+.simplephpform label
+{	
+	text-align: left;
+	display: block;
+}
+
+.simplephpform label input
+{
+	float: left;
+}
+
+.simplephpform_radiobox
+{
+	margin: 4px 0;
+	float: left;
+}
+
+.simplephpform_radiobox label
+{
+	margin: 0 4px 4px 0;
+}
+
+.simplephpform_radiobox input[type="radio"]
+{
+	margin: 2px 4px 2px 0;
+	vertical-align: middle;
+}
+
+.simplephpform input[type="checkbox"]
+{
+	margin: 2px 4px 2px 0;
+	vertical-align: middle;
+}
+
+.simplephpform_title
+{
+	padding: 6px 0 2px 0px;
+	font-weight: bold;
+}
+
+.simplephpform_help
+{
+	color: #111111;
+	font-weight: normal;
+	padding: 2px 0 2px 2px;
+	display: block;
+	clear: both;
+}
+
+.simplephpform_error
+{
+	color: #AA0000;
+	font-weight: bold;
+	padding: 2px 0 2px 20px;
+	display: block;
+	clear: both;
+	background: url('../images/warning_small.png') 0px 2px no-repeat;
+}
+
+.simplephpform_submit
+{
+	margin: 8px 0;
+	padding: 2px 4px;
+	display: block;
+}
+
+.simplephpform_state_untouched
+{
+	background: url('../images/untouched.png') no-repeat;
+	font-size: 18px;
+	height: 48px;
+	line-height: 48px;
+	padding: 2px 0 2px 50px;	
+}
+
+.simplephpform_state_success
+{
+	background: url('../images/success.png') no-repeat;
+	font-size: 18px;
+	height: 48px;
+	line-height: 48px;
+	padding: 2px 0 2px 50px;	
+}
+
+.simplephpform_state_fail
+{
+	background: url('../images/fail.png') no-repeat;
+	font-size: 18px;
+	height: 48px;
+	line-height: 48px;
+	padding: 2px 0 2px 50px;	
+}
