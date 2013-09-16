@@ -43,3 +43,7 @@ Permission is granted to anyone to use this software for any purpose, including 
 <li>Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.</li>
 <li>This notice may not be removed or altered from any source distribution.</li>
 </ul>
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/gnat/simple-php-form/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
