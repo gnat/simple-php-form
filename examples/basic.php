@@ -2,7 +2,7 @@
 	require('../SimplePHPForm.class.php'); 
 	
 	$form = new SimplePHPForm();
-	$form->Add('text', 'sirname', '', array('required'), 'Name', '', 'Your name is required.');
+	$form->Add('text', 'surname', '', array('required'), 'Name', '', 'Your name is required.');
 	$form->Add('text', 'email', '', array('required', 'email'), 'Email', '', 'Your email is required.');
 
 	if($form->Validate()) // Did the form validate successfully?
