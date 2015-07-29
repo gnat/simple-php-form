@@ -1,6 +1,7 @@
 <?php 
-	// Simple PHP Form - Centered Example. Example of a center-aligned form. 
-	require('../SimplePHPForm.php'); 
+	// Simple PHP Form - Centered Example. 
+	// Advanced example with center-aligned form.
+	require('../SimplePHPForm.class.php'); 
 
 	// Create new SimplePHPForm with custom action URL.
 	$form = new SimplePHPForm('centered.php');
@@ -33,7 +34,7 @@
 	// Did the form validate successfully?
 	if($form->Validate())
 	{
-		// Place successful form submission code here ...
+		// Place successful form submission code here ... (Send an email, register in a database, whatever ...)
 
 		// Finally, reset the form, clearing it to the default state.
 		$form->Reset();

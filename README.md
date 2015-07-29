@@ -1,9 +1,38 @@
 Simple PHP Form
 ===============
 
-Open source automatic PHP form handling module with validation, helpers, warnings and more. Supports text fields, text areas, dropdowns, checkboxes, radio buttons and hidden fields.
+Automatic PHP HTML Form generator class. Handles validation, helpers, warnings and more. Supports text fields, text areas, dropdowns, checkboxes, radio buttons and hidden fields.
 
-Validation flags supported: required, email, phone, number, lengthmax *, lengthmin *, sizemax *, sizemin *
+Validation types supported: required, email, phone, number, lengthmax *, lengthmin *, sizemax *, sizemin *
+
+```php
+<?php 
+  require('../SimplePHPForm.class.php'); 
+  
+  $form = new SimplePHPForm();
+  $form->Add('text', 'sirname', '', array('required'), 'Name', '', 'Your name is required.');
+  $form->Add('text', 'email', '', array('required', 'email'), 'Email', '', 'Your email is required.');
+
+  if($form->Validate()) // Did the form validate successfully?
+  {
+    // Success ! Send an email or register user in a database somewhere...
+    $form->Reset(); // Reset to default form.
+  }
+?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>SimplePHPForm Basic Example</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/simplephpform_default.css" />
+    </head>
+  <body>
+    <?php echo $form->Display(); ?>
+  </body>
+</html> 
+```
+
+**Example Scripts**
 
 <ul>
 <li>Basic usage: <strong>./examples/basic.php</strong></li>
@@ -11,9 +40,7 @@ Validation flags supported: required, email, phone, number, lengthmax *, lengthm
 <li>Center-aligned usage: <strong>./examples/centered.php</strong></li>
 </ul>
 
-Copyright © Nathaniel Sabanski. Released under the zlib/libpng license.
-
-**Screenshot of Advanced Example:**
+**Screenshot of Advanced Example**
 
 <img src="http://i.imgur.com/nlanA5R.png" alt="Simple PHP Form Example 1" />
 
@@ -32,6 +59,8 @@ Copyright © Nathaniel Sabanski. Released under the zlib/libpng license.
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8; </code></pre>
 
+Copyright © Nathaniel Sabanski. Released under the zlib/libpng license.
+
 **zlib/libpng license:**
 
 This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software.
@@ -44,6 +73,4 @@ Permission is granted to anyone to use this software for any purpose, including 
 <li>This notice may not be removed or altered from any source distribution.</li>
 </ul>
 
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/gnat/simple-php-form/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 

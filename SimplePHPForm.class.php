@@ -1,21 +1,18 @@
 <?php
 
-/*
-	Simple PHP Form
-	
-	Open source automatic PHP form handling module with validation, helpers, warnings and more. 
-	Supports text fields, text areas, dropdowns, checkboxes, radio buttons and hidden fields.
-
-	Validation flags supported: required, email, phone, number, lengthmax *, lengthmin *, sizemax *, sizemin *
-
-	See ./examples/basic.php and ./examples/advanced.php and ./examples/centered.php for usage.
-
-	Copyright © Nathaniel Sabanski. Released under the BSD License.
-
-	Author Home: http://geenat.com
-	Source: http://github.com/gnat/simple-php-form
+/**
+* Simple PHP Form
+*
+* Open source automatic PHP form handling module with validation, helpers, warnings and more. 
+* Supports text fields, text areas, dropdowns, checkboxes, radio buttons and hidden fields.
+* Validation flags supported: required, email, phone, number, lengthmax *, lengthmin *, sizemax *, sizemin *
+* 
+* See ./examples/basic.php and ./examples/advanced.php and ./examples/centered.php for usage.
+*
+* @author Nathaniel Sabanski
+* @link http://github.com/gnat/simple-php-form
+* @license zlib/libpng license
 */
-
 class SimplePHPForm
 {
 	const STATE_NEW = 0;
@@ -37,12 +34,26 @@ class SimplePHPForm
 	var $message_error = 'You have discovered an internal error. Please contact us!';
 	var $message_duplicate = 'You are already registered. If there is an issue, please contact us.';
 	
+	/**
+	* Constructor.
+	* @param string $url_action Override re-direct URL.
+	*/
 	function SimplePHPForm($url_action = '')
 	{
 		// Set custom <form> action.
 		$this->url_action = $url_action;
 	}
 
+	/**
+	* Add new field to form.
+	* @param string $type Field type.
+	* @param string $name Field name which can be refernced internally.
+	* @param string $data Default data displayed in field.
+	* @param string $data_validation_flags Data entered will be sanitized against this list of tests.
+	* @param string $text_title Title of field.
+	* @param string $text_help Helper text which is displayed to the User at fill-out time.
+	* @param string $text_error Error text which is displayed to the User when validation fails.
+	*/
 	function Add($type, $name, $data, $data_validation_flags, $text_title, $text_help, $text_error)
 	{
 		// Set default data.
@@ -67,16 +78,32 @@ class SimplePHPForm
 		}
 	}
 
+	/**
+	* Add new dropdown field to form.
+	* @param string $name Field name which can be refernced internally.
+	* @param string $data Default data for the field.
+	* @param string $value Default display value for the field.
+	*/
 	function AddDropdownEntry($name, $data, $value)
 	{
 		$this->input_list[$name]->dropdown_entries[$value] = $data;
 	}
 
+	/**
+	* Add new radio button field to form.
+	* @param string $name Field name which can be refernced internally.
+	* @param string $value Default display value for the field.
+	* @param string $data Default data for the field.
+	*/
 	function AddRadioButton($name, $value, $data)
 	{
 		$this->input_list[$name]->radio_entries[$value] = $data;
 	}
 
+	/**
+	* Display form state to User.
+	* @return string Display in HTML format.
+	*/
 	function DisplayState()
 	{
 		$output = '';
@@ -96,6 +123,11 @@ class SimplePHPForm
 		return $output."\n";
 	}
 
+	/**
+	* Display form field.
+	* @param string Given field name.
+	* @return string Display in HTML format.
+	*/
 	function Display($name = '')
 	{
 		// No InputEntry specified? Return them all in the order they were defined.
@@ -206,12 +238,19 @@ class SimplePHPForm
 		}
 	}
 
+	/**
+	* Reset all form data to defaults.
+	*/
 	function Reset()
 	{
 		foreach($this->input_list as $input)
 			$input->data = $input->data_default;
 	}
 
+	/**
+	* Validate form data.
+	* @return boolean True = Success. False = Failure.
+	*/
 	function Validate()
 	{
 		// Was this form submitted? Or is this page new?
@@ -300,6 +339,11 @@ class SimplePHPForm
 			return false;
 	}
 
+	/**
+	* Validation test. Does the data exist?
+	* @param string Data.
+	* @return boolean True = Yes. False = No.
+	*/
 	function ValidateExists($data)
 	{
 		if($data != '')
@@ -308,6 +352,11 @@ class SimplePHPForm
 			return false;
 	}
 
+	/**
+	* Validation test. Valid email?
+	* @param string Data.
+	* @return boolean True = Yes. False = No.
+	*/
 	function ValidateEmail($data)
 	{
 		if(strlen($data) < 5 || strpos($data, '@') == false || strpos($data, '.') == false || stripos($data, ' ') != false)
@@ -316,6 +365,11 @@ class SimplePHPForm
 			return true;
 	}
 
+	/**
+	* Validation test. Valid phone number?
+	* @param string Data.
+	* @return boolean True = Yes. False = No.
+	*/
 	function ValidatePhone($data)
 	{
 		if(!intval($data) || strlen($data) < 10 || strlen($data) > 30)
@@ -324,6 +378,11 @@ class SimplePHPForm
 			return true;
 	}
 
+	/**
+	* Validation test. Valid number?
+	* @param string Data.
+	* @return boolean True = Yes. False = No.
+	*/
 	function ValidateNumber($data)
 	{
 		if(is_numeric($data))
@@ -332,6 +391,12 @@ class SimplePHPForm
 			return false;
 	}
 
+	/**
+	* Validation test. Valid maximum string length?
+	* @param string Data.
+	* @param string Max size allowed.
+	* @return boolean True = Yes. False = No.
+	*/
 	function ValidateLengthMax($data, $size)
 	{
 		if(strlen($data) > $size)
@@ -340,6 +405,12 @@ class SimplePHPForm
 			return true;
 	}
 
+	/**
+	* Validation test. Valid minimum string length?
+	* @param string Data.
+	* @param string Minimum size allowed.
+	* @return boolean True = Yes. False = No.
+	*/
 	function ValidateLengthMin($data, $size)
 	{
 		if(strlen($data) < $size)
@@ -348,6 +419,12 @@ class SimplePHPForm
 			return true;
 	}
 
+	/**
+	* Validation test. Valid maximum number size?
+	* @param string Data.
+	* @param string Maximum number allowed.
+	* @return boolean True = Yes. False = No.
+	*/
 	function ValidateSizeMax($data, $size)
 	{
 		if(is_numeric($data))
@@ -357,6 +434,12 @@ class SimplePHPForm
 		return true;
 	}
 
+	/**
+	* Validation test. Valid minimum number size?
+	* @param string Data.
+	* @param string Minimum number allowed.
+	* @return boolean True = Yes. False = No.
+	*/
 	function ValidateSizeMin($data, $size)
 	{
 		if(is_numeric($data))
@@ -367,6 +450,9 @@ class SimplePHPForm
 	}
 }
 
+/**
+* Used internally by SimplePHPForm to hold field data.
+*/
 class SimplePHPFormInput
 {
 	var $type = 'text';
