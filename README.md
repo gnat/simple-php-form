@@ -44,21 +44,6 @@ Validation types supported: required, email, phone, number, lengthmax *, lengthm
 
 <img src="http://i.imgur.com/nlanA5R.png" alt="Simple PHP Form Example 1" />
 
-**SQL for creating the Advanced Example table:**
-
-<pre><code> CREATE TABLE `attendees` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `realname` varchar(45) NOT NULL,
-  `username` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `phone` varchar(45) NOT NULL,
-  `race` varchar(45) NOT NULL,
-  `beverage` int(10) unsigned NOT NULL,
-  `suggestions` text NOT NULL,
-  `notify` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8; </code></pre>
-
 Copyright © Nathaniel Sabanski. Released under the zlib/libpng license.
 
 

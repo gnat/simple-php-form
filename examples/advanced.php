@@ -46,6 +46,23 @@
 		// 1. Checks for email duplicate in database.
 		// 2. Stores new attendee in your database.
 		// 3. Sends a email notification.
+
+		// Want to create the table yourself? Use this code.
+
+		/*
+			CREATE TABLE `attendees` (
+			  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+			  `realname` varchar(45) NOT NULL,
+			  `username` varchar(45) NOT NULL,
+			  `email` varchar(45) NOT NULL,
+			  `phone` varchar(45) NOT NULL,
+			  `race` varchar(45) NOT NULL,
+			  `beverage` int(10) unsigned NOT NULL,
+			  `suggestions` text NOT NULL,
+			  `notify` tinyint(1) NOT NULL,
+			  PRIMARY KEY (`id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+		*/
 		
 		define('DB_HOST', 'localhost'); // Usually localhost.
 		define('DB_HOST_PORT', 3306); // Default port is 3306.
