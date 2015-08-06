@@ -42,7 +42,7 @@ Validation types supported: required, email, phone, number, lengthmax *, lengthm
 
 **Screenshot of Example**
 
-<img src="http://i.imgur.com/0pObrFz.png" alt="Simple PHP Form Example 1" />
+<img src="http://i.imgur.com/PNtyxTl.png" alt="Simple PHP Form Example 1" />
 
 Copyright © Nathaniel Sabanski. Released under the zlib/libpng license.
 
