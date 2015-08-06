@@ -40,13 +40,9 @@ Validation types supported: required, email, phone, number, lengthmax *, lengthm
 <li>Center-aligned usage: <strong>./examples/centered.php</strong></li>
 </ul>
 
-**Screenshot of Centered Example**
+**Screenshot of Example**
 
-<img src="http://i.imgur.com/aNIMRVe.png" alt="Simple PHP Form Example 1" />
-
-**Screenshot of Advanced Example**
-
-<img src="http://i.imgur.com/CBlHPgR.png" alt="Simple PHP Form Example 2" />
+<img src="http://i.imgur.com/0pObrFz.png" alt="Simple PHP Form Example 1" />
 
 Copyright © Nathaniel Sabanski. Released under the zlib/libpng license.
 
