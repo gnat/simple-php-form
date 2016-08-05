@@ -1,6 +1,10 @@
 {
 	"name": "gnat/simple-php-form",
+	"type": "library",
+	"keywords": "forms, input, email, feedback, response",
+	"homepage": "https://github.com/gnat/simple-php-form",
+	"license": "Zlib",
 	"autoload": {
-        "classmap": ["SimplePHPForm.php"]
-    }
+		"classmap": ["SimplePHPForm.php"]
+	}
 }
