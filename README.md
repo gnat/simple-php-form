@@ -63,7 +63,11 @@ Add to your *composer.json* file and run *php composer update*.
 }
 ```
 
-Copyright © Nathaniel Sabanski. Released under the zlib/libpng license.
+## Keywords
 
+Forms, User Feedback, Model View Controller, PHP 7 Compatible, PHP 7+, email, input, simple, lean.
 
+## License
+
+This project is licensed under the zlib/libpng license.
 
