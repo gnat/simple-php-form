@@ -1,3 +1,6 @@
 {
-	"name": "gnat/simple-php-form"
+	"name": "gnat/simple-php-form",
+	"autoload": {
+        "classmap": ["SimplePHPForm.php"]
+    }
 }
