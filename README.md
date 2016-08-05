@@ -7,7 +7,7 @@ Validation types supported: required, email, phone, number, lengthmax *, lengthm
 
 ```php
 <?php 
-  require('SimplePHPForm.class.php'); 
+  require('SimplePHPForm.php'); 
   
   $form = new SimplePHPForm();
   $form->Add('text', 'name', '', array('required'), 'Name', '', 'Your name is required.');
@@ -43,6 +43,25 @@ Validation types supported: required, email, phone, number, lengthmax *, lengthm
 **Screenshot of Example**
 
 <img src="http://i.imgur.com/PNtyxTl.png" alt="Simple PHP Form Example 1" />
+
+**Using Composer**
+
+Add to your *composer.json* file and run *php composer update*.
+
+```json
+{
+    "name": "you/your-project",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/gnat/simple-php-form"
+        }
+    ],
+    "require": {
+        "gnat/simple-php-form": "dev-master"
+    }
+}
+```
 
 Copyright © Nathaniel Sabanski. Released under the zlib/libpng license.
 

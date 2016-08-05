@@ -1,5 +1,5 @@
 <?php 
-	require('../SimplePHPForm.class.php'); 
+	require('../SimplePHPForm.php'); 
 	
 	$form = new SimplePHPForm();
 	$form->Add('text', 'surname', '', array('required'), 'Name', '', 'Your name is required.');

@@ -1,7 +1,7 @@
 <?php 
 	// Simple PHP Form - Centered Example. 
 	// Advanced example with center-aligned form.
-	require('../SimplePHPForm.class.php'); 
+	require('../SimplePHPForm.php'); 
 
 	// Create new SimplePHPForm with custom action URL.
 	$form = new SimplePHPForm('centered.php');
