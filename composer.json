@@ -5,6 +5,7 @@
 	"keywords": ["form", "forms", "input", "email", "feedback", "response", "validation", "helpers", "warnings"],
 	"homepage": "https://github.com/gnat/simple-php-form",
 	"license": "Zlib",
+	"authors": [{ "name": "Nathaniel Sabanski", "homepage": "http://nconsulting.ca", "role": "Developer" }],
 	"require": {
 		"php": "^5.3.0 || ^7.0"
 	},
