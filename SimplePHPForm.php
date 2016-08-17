@@ -38,7 +38,7 @@ class SimplePHPForm
 	* Constructor.
 	* @param string $url_action Override re-direct URL.
 	*/
-	function SimplePHPForm($url_action = '')
+	function __construct($url_action = '')
 	{
 		// Set custom <form> action.
 		$this->url_action = $url_action;
