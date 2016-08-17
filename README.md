@@ -1,6 +1,8 @@
 Simple PHP Form
 ===============
 
+[![Build Status](https://travis-ci.org/gnat/simple-php-form.svg?branch=master)](https://travis-ci.org/gnat/simple-php-form)
+
 Automatic PHP HTML Form generator class. Handles validation, helpers, warnings and more. Supports text fields, text areas, dropdowns, checkboxes, radio buttons and hidden fields.
 
 Validation types supported: required, email, phone, number, lengthmax *, lengthmin *, sizemax *, sizemin *
