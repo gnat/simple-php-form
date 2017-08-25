@@ -205,7 +205,7 @@ class SimplePHPForm
 			}
 			else if($type == 'checkbox') // Check box. Never needs an error message. Will never need an error or info message.
 			{
-				$output .= '<div class="simplephpform_title"></div><div style="float: left; margin-bottom: 2px;">'."\n";
+				$output .= '<div class="simplephpform_title"></div><div style="">'."\n";
 
 				if(boolval($this->input_list[$name]->data))
 					$output .= '<label><input type="'.$this->input_list[$name]->type.'" name="simplephpform_'.$this->input_list[$name]->name.'" checked="checked" />'.$this->input_list[$name]->text_title."</label>\n";
