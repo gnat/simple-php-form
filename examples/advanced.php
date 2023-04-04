@@ -1,43 +1,41 @@
 <?php 
-
 	// Simple PHP Form - Advanced Example. 
 	// Full featured example showing off many configuration options and form submission code sample.
 	require('../SimplePHPForm.php'); 
 	
 	// Create new SimplePHPForm with custom action URL.
-	$form = new SimplePHPForm('advanced.php');
-
-	// Custom status messages.
-	$form->message_new = 'Event Registration';
-	$form->message_success = 'Form submitted successfully!';
-	$form->message_success_2 = 'You should receive a confirmation email shortly!';
-	$form->message_fail = 'Oops! We had trouble accepting your form. Details below.';
-	$form->message_error = 'You have discovered an internal error. Please contact us!';
+	$form = new SimplePHPForm('advanced.php',
+		// Custom status messages.
+		message_new:'Event Registration',
+		message_success:'Form submitted successfully! You should receive a confirmation email shortly!',
+		message_fai:'Oops! We had trouble accepting your form. Details below.',
+		message_error:'You have discovered an internal error. Please contact us!'
+	);
 
 	// Add text inputs. (input type, name/id, default data, validation flags, label, helper message, validation warning message).
-	$form->Add('text', 'realname', 'Default text.', array('required'), 'Name', '', 'Your name is required.');
-	$form->Add('text', 'username', '', array('required', 'lengthmin 2'), 'Screen Name', '', 'Your screen name is required.');
-	$form->Add('text', 'email', '', array('required', 'email'), 'Email', '', 'Your email is required.');
-	$form->Add('text', 'phone', '', array('phone'), 'Phone Number', 'We\'ll send you a quick reminder the day before the event!', 'Your phone number must be valid.');
+	$form->Add('realname', 'text', 'Default text.', array('required'), 'Name', '', 'Your name is required.');
+	$form->Add('username', 'text', '', array('required', 'lengthmin 2'), 'Screen Name', '', 'Your screen name is required.');
+	$form->Add('email', 'text', '', array('required', 'email'), 'Email', '', 'Your email is required.');
+	$form->Add('phone', 'text', '', array('phone'), 'Phone Number', 'We\'ll send you a quick reminder the day before the event!', 'Your phone number must be valid.');
 	
 	// Add text area.
-	$form->Add('textarea', 'suggestions', '', array(''), 'Suggestion Box', 'Have your voice heard!', '');
+	$form->Add('suggestions', 'textarea', '', array(''), 'Suggestion Box', 'Have your voice heard!', '');
 	
 	// Add drop down list.
-	$form->Add('dropdown', 'race', '', array('required'), 'Your Race', '', 'Your selection is required.');
+	$form->Add('race', 'dropdown', '', array('required'), 'Your Race', '', 'Your selection is required.');
 	$form->AddDropdownEntry('race', 'Ready to roll out! (Terran)', 'terran');
 	$form->AddDropdownEntry('race', 'My life for Auir! (Protoss)', 'protoss');
 	$form->AddDropdownEntry('race', 'Here\'s for the swarm! (Zerg)', 'zerg');
 	$form->AddDropdownEntry('race', 'Ballin out of control! (Random)', 'random');
 	
 	// Add radio button list.
-	$form->Add('radio', 'beverage', '', array('required'), 'Preferred Beverage', '', 'Your selection is required.');
+	$form->Add('beverage', 'radio', '', array('required'), 'Preferred Beverage', '', 'Your selection is required.');
 	$form->AddRadioButton('beverage', 'Coffee', 0);
 	$form->AddRadioButton('beverage', 'Tea', 1);
 	$form->AddRadioButton('beverage', 'Bawls', 2);
 
 	// Add check box.
-	$form->Add('checkbox', 'notify', true, array(''), 'Notify me of future gaming events in my area.', '', '');
+	$form->Add('notify', 'checkbox', true, array(''), 'Notify me of future gaming events in my area.', '', '');
 
 	// Did the form validate successfully?
 	if($form->Validate())
@@ -79,10 +77,10 @@
 
 		// Database has not been configured, just move on as example.
 		if(DB_PASSWORD == 'password')
-			$form->message_success_2 = 'However nothing will happen because your database has not been configured.';
+			$form->message_success = 'Form submitted successfully! However nothing will happen because your database has not been configured.';
 		else
 		{
-			try 
+			try
 			{
 				// Connect to Database.
 				$dbh = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME.";port=".DB_HOST_PORT, DB_USER, DB_PASSWORD, array( PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING ));
@@ -90,7 +88,7 @@
 
 				// Is this email already registered?
 				$query = $dbh->prepare("SELECT email FROM attendees WHERE email=:email LIMIT 1");
-				$query->bindParam(':email', $form->input_list['email']->data, PDO::PARAM_STR, 45);
+				$query->bindParam(':email', $form->Get('email'), PDO::PARAM_STR, 45);
 				$query->execute();
 
 				if(count($query->fetchAll()) > 0)
@@ -99,14 +97,14 @@
 				{
 					// Insert new user into database.
 					$query = $dbh->prepare("INSERT INTO ".DB_TABLE."(realname,username,email,phone,race,beverage,suggestions,notify) VALUES (:realname,:username,:email,:phone,:race,:beverage,:suggestions,:notify) ON DUPLICATE KEY UPDATE realname=:realname,username=:username,email=:email,phone=:phone,race=:race,beverage=:beverage,suggestions=:suggestions,notify=:notify");
-					$query->bindParam(':realname', $form->input_list['realname']->data, PDO::PARAM_STR, 45);
-					$query->bindParam(':username', $form->input_list['username']->data, PDO::PARAM_STR, 45);
-					$query->bindParam(':email', $form->input_list['email']->data, PDO::PARAM_STR, 45);
-					$query->bindParam(':phone', $form->input_list['phone']->data, PDO::PARAM_STR, 45);
-					$query->bindParam(':race', $form->input_list['race']->data, PDO::PARAM_STR, 45);
-					$query->bindParam(':beverage', $form->input_list['beverage']->data, PDO::PARAM_INT);
-					$query->bindParam(':suggestions', $form->input_list['suggestions']->data, PDO::PARAM_STR, 1000);
-					$query->bindParam(':notify', $form->input_list['notify']->data, PDO::PARAM_BOOL);
+					$query->bindParam(':realname', $form->Get('realname'), PDO::PARAM_STR, 45);
+					$query->bindParam(':username', $form->Get('username'), PDO::PARAM_STR, 45);
+					$query->bindParam(':email', $form->Get('email'), PDO::PARAM_STR, 45);
+					$query->bindParam(':phone', $form->Get('phone'), PDO::PARAM_STR, 45);
+					$query->bindParam(':race', $form->Get('race'), PDO::PARAM_STR, 45);
+					$query->bindParam(':beverage', $form->Get('beverage'), PDO::PARAM_INT);
+					$query->bindParam(':suggestions', $form->Get('suggestions'), PDO::PARAM_STR, 1000);
+					$query->bindParam(':notify', $form->Get('notify'), PDO::PARAM_BOOL);
 					$query->execute();
 				
 					// Send a confirmation email!
@@ -117,7 +115,7 @@
 
 						$header = "From: ".MAIL_FROM."\r\n"."Reply-To: ".MAIL_FROM."\r\n";
 						
-						mail($form->input_list['email']->data, MAIL_SUBJECT, MAIL_CONTENT, $header);
+						mail($form->Get('email'), MAIL_SUBJECT, MAIL_CONTENT, $header);
 					}
 				}
 
