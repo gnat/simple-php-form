@@ -21,6 +21,6 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="css/simplephpform_default.css" />
     </head>
 	<body>
-		<?php echo $form->display(full:true); ?>
+		<?php echo $form->displayFull(); ?>
 	</body>
 </html>	
