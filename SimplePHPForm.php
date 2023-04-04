@@ -33,15 +33,15 @@ class SimplePHPForm
 
 	/**
 	* Add new field to form.
-	* @param string $type Field type.
 	* @param string $name Field name which can be refernced internally.
+	* @param string $type Field type.
 	* @param string $data Default data displayed in field.
 	* @param string $data_validation_flags Data entered will be sanitized against this list of tests.
 	* @param string $text_title Title of field.
 	* @param string $text_help Helper text which is displayed to the User at fill-out time.
 	* @param string $text_error Error text which is displayed to the User when validation fails.
 	*/
-	function Add($type, $name, $data, $data_validation_flags, $text_title, $text_help, $text_error)
+	function Add($name, $type, $data, $data_validation_flags, $text_title, $text_help, $text_error)
 	{
 		// Set default data.
 		$data_default = $data;
@@ -53,7 +53,7 @@ class SimplePHPForm
 			$this->state = self::STATE_VALIDATE; // We've got data during this pass. Form should be validated.
 		}
 
-		$this->input_list[$name] = new SimplePHPFormInput($type, $name, $data, $data_validation_flags, $data_default, $text_title, $text_help, $text_error);
+		$this->input_list[$name] = new SimplePHPFormInput($name, $type, $data, $data_validation_flags, $data_default, $text_title, $text_help, $text_error);
 	
 		// Special logic for checkbox types because browsers simply do not $_POST them if they are unchecked.
 		if($type == 'checkbox' && $this->state != self::STATE_NEW)
@@ -392,8 +392,8 @@ class SimplePHPForm
 class SimplePHPFormInput
 {
 	function __construct(
-			public $type='text',
 			public $name=NULL,
+			public $type='text',
 			public $data='',
 			public $data_validation_flags=[],
 			public $data_default='',
