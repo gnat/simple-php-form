@@ -117,7 +117,7 @@ class SimplePHPForm
 	/**
 	* Display the form.
 	* @param string|bool $name Display individual field. All fields if false.
-	* @param bool $complete If name is false, display full form including <form> tags if true. Only fields if false. Optional.
+	* @param bool $full If $name is false: Display full form if true. Only fields if false. Optional.
 	*/
 	function display($name='', $full=false)
 	{
