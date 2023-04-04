@@ -12,11 +12,12 @@ Validation types supported: required, email, phone, number, lengthmax *, lengthm
   require('SimplePHPForm.php'); 
   
   $form = new SimplePHPForm();
-  $form->Add('text', 'name', '', array('required'), 'Name', '', 'Your name is required.');
-  $form->Add('text', 'email', '', array('required', 'email'), 'Email', '', 'Your email is required.');
+  $form->Add('name', 'text', '', array('required'), 'Name', '', 'Your name is required.');
+  $form->Add('email', 'text', '', array('required', 'email'), 'Email', '', 'Your email is required.');
 
   if($form->Validate()) // Did the form validate successfully?
   {
+    // Get data: $form->Get('name'); ...
     // Success ! Send an email or register user in a database somewhere...
     $form->Reset(); // Reset to default form.
   }
@@ -67,7 +68,7 @@ Add to your *composer.json* file and run *php composer update*.
 
 ## Keywords
 
-Forms, User Feedback, Model View Controller, PHP 7 Compatible, PHP 7+, email, input, simple, lean.
+Forms, User Feedback, Model View Controller, PHP 8 Compatible, PHP 8+, email, input, simple, lean.
 
 ## License
 
