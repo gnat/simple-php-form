@@ -1,5 +1,4 @@
 <?php
-
 /**
 * Simple PHP Form
 *
@@ -8,10 +7,6 @@
 * Validation flags supported: required, email, phone, number, lengthmax *, lengthmin *, sizemax *, sizemin *
 * 
 * See ./examples/basic.php and ./examples/advanced.php and ./examples/centered.php for usage.
-*
-* @author Nathaniel Sabanski
-* @link http://github.com/gnat/simple-php-form
-* @license zlib/libpng license
 */
 class SimplePHPForm
 {
@@ -22,26 +17,18 @@ class SimplePHPForm
 	const STATE_ERROR = 4;
 	const STATE_DUPLICATE = 5;
 	
-	var $state = 0;
-	var $input_list = array();
-
-	var $url_action = '';
-
-	var $message_new = 'Registration Form';
-	var $message_success = 'Form submitted successfully!';
-	var $message_success_2 ='You should receive a confirmation email shortly!';
-	var $message_fail = 'Oops! We had trouble accepting your form. Details below.';
-	var $message_error = 'You have discovered an internal error. Please contact us!';
-	var $message_duplicate = 'You are already registered. If there is an issue, please contact us.';
-	
-	/**
-	* Constructor.
-	* @param string $url_action Override re-direct URL.
-	*/
-	function __construct($url_action = '')
+	function __construct(
+			public $url_action='',
+			public $message_new='Registration Form',
+			public $message_success='Form submitted successfully! You should receive a confirmation email shortly!',
+			public $message_fail='Oops! We had trouble accepting your form. Details below.',
+			public $message_error='You have discovered an internal error. Please contact us!',
+			public $message_duplicate='You are already registered. If there is an issue, please contact us.',
+			public $state=self::STATE_NEW,
+			public $input_list=[]
+		)
 	{
-		// Set custom <form> action.
-		$this->url_action = $url_action;
+		// Using PHP 8 constructor promotion.
 	}
 
 	/**
@@ -100,10 +87,7 @@ class SimplePHPForm
 		$this->input_list[$name]->radio_entries[$value] = $data;
 	}
 
-	/**
-	* Display form state to User.
-	* @return string Display in HTML format.
-	*/
+	// Display form state to User.
 	function DisplayState()
 	{
 		$output = '';
@@ -111,7 +95,7 @@ class SimplePHPForm
 		if($this->state == self::STATE_NEW) {
 			$output = '<div class="simplephpform_state_untouched">'.$this->message_new.'</div>';
 		} if($this->state == self::STATE_SUCCESS) {
-			$output = '<div class="simplephpform_state_success">'.$this->message_success.'</div> <p>'.$this->message_success_2.'</p> <br />';
+			$output = '<div class="simplephpform_state_success">'.$this->message_success.'</div> <br />';
 		} if($this->state == self::STATE_FAIL) {
 			$output = '<div class="simplephpform_state_fail">'.$this->message_fail.'</div>';			
 		} if($this->state == self::STATE_ERROR) {
@@ -123,11 +107,7 @@ class SimplePHPForm
 		return $output."\n";
 	}
 
-	/**
-	* Display form field.
-	* @param string Given field name.
-	* @return string Display in HTML format.
-	*/
+	// Display form field.
 	function Display($name = '')
 	{
 		// No InputEntry specified? Return them all in the order they were defined.
@@ -233,24 +213,26 @@ class SimplePHPForm
 			}	
 
 			$output .= '<div class="simplephpform_clear"></div>';
-			
 			return $output;
 		}
 	}
 
-	/**
-	* Reset all form data to defaults.
-	*/
+	// Reset all form data to defaults.
 	function Reset()
 	{
 		foreach($this->input_list as $input)
 			$input->data = $input->data_default;
 	}
+	
+	// Get a value from the form.
+	function Get($name)
+	{
+		if(isset($this->input_list[$name]->data))
+			return $this->input_list[$name]->data;
+		return null;
+	}
 
-	/**
-	* Validate form data.
-	* @return boolean True = Success. False = Failure.
-	*/
+	// Validate form data.
 	function Validate()
 	{
 		// Was this form submitted? Or is this page new?
@@ -339,176 +321,100 @@ class SimplePHPForm
 			return false;
 	}
 
-	/**
-	* Validation test. Does the data exist?
-	* @param string Data.
-	* @return boolean True = Yes. False = No.
-	*/
+	// Does data exist?
 	function ValidateExists($data)
 	{
 		if($data != '')
 			return true;
-		else
-			return false;
+		return false;
 	}
 
-	/**
-	* Validation test. Valid email?
-	* @param string Data.
-	* @return boolean True = Yes. False = No.
-	*/
+	// Valid email?
 	function ValidateEmail($data)
 	{
-		if(strlen($data) < 5 || strpos($data, '@') == false || strpos($data, '.') == false || stripos($data, ' ') != false)
-			return false;
-		else
+		if(strlen($data) > 5 && strstr($data, '@') && strstr($data, '.') && strstr($data, ' ') == false)
 			return true;
+		return false;
 	}
 
-	/**
-	* Validation test. Valid phone number?
-	* @param string Data.
-	* @return boolean True = Yes. False = No.
-	*/
+	// Valid phone number?
 	function ValidatePhone($data)
 	{
-		if(!intval($data) || strlen($data) < 10 || strlen($data) > 30)
-			return false;
-		else
+		if(intval($data) && strlen($data) > 10 && strlen($data) < 30)
 			return true;
+		return true;
 	}
 
-	/**
-	* Validation test. Valid number?
-	* @param string Data.
-	* @return boolean True = Yes. False = No.
-	*/
+	// Valid number?
 	function ValidateNumber($data)
 	{
 		if(is_numeric($data))
 			return true;
-		else
-			return false;
+		return false;
 	}
 
-	/**
-	* Validation test. Valid maximum string length?
-	* @param string Data.
-	* @param string Max size allowed.
-	* @return boolean True = Yes. False = No.
-	*/
+	// Valid maximum string length?
 	function ValidateLengthMax($data, $size)
 	{
-		if(strlen($data) > $size)
-			return false;
-		else
+		if(strlen($data) < $size)
 			return true;
+		return false;
 	}
 
-	/**
-	* Validation test. Valid minimum string length?
-	* @param string Data.
-	* @param string Minimum size allowed.
-	* @return boolean True = Yes. False = No.
-	*/
+	// Valid minimum string length?
 	function ValidateLengthMin($data, $size)
 	{
-		if(strlen($data) < $size)
-			return false;
-		else
+		if(strlen($data) > $size)
 			return true;
+		return false;
 	}
 
-	/**
-	* Validation test. Valid maximum number size?
-	* @param string Data.
-	* @param string Maximum number allowed.
-	* @return boolean True = Yes. False = No.
-	*/
+	// Valid maximum number size?
 	function ValidateSizeMax($data, $size)
 	{
 		if(is_numeric($data))
-			if($data > $size)
-				return false;
-
-		return true;
+			if($data < $size)
+				return true;
+		return false;
 	}
 
-	/**
-	* Validation test. Valid minimum number size?
-	* @param string Data.
-	* @param string Minimum number allowed.
-	* @return boolean True = Yes. False = No.
-	*/
+	// Valid minimum number size?
 	function ValidateSizeMin($data, $size)
 	{
 		if(is_numeric($data))
-			if($data < $size)
-				return false;
-
-		return true;
+			if($data > $size)
+				return true;
+		return false;
 	}
 }
 
-/**
-* Used internally by SimplePHPForm to hold field data.
-*/
+// Used internally by SimplePHPForm to hold field data.
 class SimplePHPFormInput
 {
-	var $type = 'text';
-	var $name = NULL;
-	var $data = '';
-	var $data_default = '';
-	var $data_validation_flags = array();
-	var $state = SimplePHPForm::STATE_NEW;
-	
-	var $text_title = '';
-	var $text_help = '';
-	var $text_error = '';
-	
-	// Special variables used for specific input types.
-	var $rows = 3;
-	var $columns = 30;
-	var $dropdown_entries = array();
-	var $radio_entries = array();
-	
-	function __construct($type, $name, $data, $data_validation_flags, $data_default, $text_title, $text_help, $text_error)
+	function __construct(
+			public $type='text',
+			public $name=NULL,
+			public $data='',
+			public $data_validation_flags=[],
+			public $data_default='',
+			public $text_title='',
+			public $text_help='',
+			public $text_error='',
+			// Internal state.
+			public $state=SimplePHPForm::STATE_NEW,
+			// Special variables used for specific input types.
+			public $rows=3,
+			public $columns=30,
+			public $dropdown_entries=[],
+			public $radio_entries=[]
+		)
 	{
-		$this->type = $type;
-		$this->name = $name;
-		$this->data = $data;
-		$this->data_default = $data_default;
-		$this->data_validation_flags = $data_validation_flags;
-		
-		$this->text_title = $text_title;
-		$this->text_help = $text_help;
-		$this->text_error = $text_error;
-
+		// Using PHP 8 constructor promotion.
 		// If checkbox, $data needs to be true or false.
 		if($type == 'checkbox')
 		{
 			$this->data = boolval($data);
 			$this->data_default = boolval($data_default);
 		}
-	}
-}
-
-// For PHP < 5.5.0
-if (!function_exists('boolval')) 
-{
-	function boolval($in) 
-	{
-		$out = false;
-		
-		if(is_string($in))
-			$in = strtolower($in);
-		
-		if (in_array($in, array('false', 'no', 'n', '0', 'off', false, 0), true) || !$in)
-			$out = false;
-		    
-		if (in_array($in, array('true', 'yes', 'y', '1', 'on', true, 1), true))
-			$out = true;
-
-		return $out;
 	}
 }
