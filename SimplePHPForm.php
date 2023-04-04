@@ -2,9 +2,9 @@
 /**
 * Simple PHP Form
 *
-* Open source automatic PHP form handling module with validation, helpers, warnings and more. 
-* Supports text fields, text areas, dropdowns, checkboxes, radio buttons and hidden fields.
-* Validation flags supported: required, email, phone, number, lengthmax *, lengthmin *, sizemax *, sizemin *
+* Automatic form handling with validation, helpers, warnings and more. 
+* Form fields: text fields, text areas, dropdowns, checkboxes, radio buttons and hidden fields.
+* Validation flags: required, email, phone, number, lengthmax *, lengthmin *, sizemax *, sizemin *
 * 
 * See ./examples/basic.php and ./examples/advanced.php and ./examples/centered.php for usage.
 */
