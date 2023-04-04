@@ -51,7 +51,7 @@
     </head>
 	<body>
 		<div class="simplephpform_wrapper">
-			<?php echo $form->displayFull(); ?>
+			<?php echo $form->display(true); ?>
 		</div>
 	</body>
 </html>

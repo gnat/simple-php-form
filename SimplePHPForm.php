@@ -2,10 +2,10 @@
 /**
 * Simple Forms for PHP
 *
-* Automatic form handling with validation, helpers, warnings and more. 
+* Automatic form handling with validation, helpers, warnings and more.
 * Form fields: text fields, text areas, dropdowns, checkboxes, radio buttons and hidden fields.
 * Validation flags: required, email, phone, number, lengthmax *, lengthmin *, sizemax *, sizemin *
-* 
+*
 * See ./examples/basic.php and ./examples/advanced.php and ./examples/centered.php for usage.
 */
 class SimplePHPForm
@@ -16,7 +16,7 @@ class SimplePHPForm
 	const STATE_FAIL = 3;
 	const STATE_ERROR = 4;
 	const STATE_DUPLICATE = 5;
-	
+
 	function __construct(
 			public $url_action='',
 			public $message_new='Registration Form',
@@ -54,7 +54,7 @@ class SimplePHPForm
 		}
 
 		$this->input_list[$name] = new SimplePHPFormInput($name, $type, $data, $data_validation_flags, $data_default, $text_title, $text_help, $text_error);
-	
+
 		// Special logic for checkbox types because browsers simply do not $_POST them if they are unchecked.
 		if($type == 'checkbox' && $this->state != self::STATE_NEW)
 		{
@@ -108,25 +108,17 @@ class SimplePHPForm
 	}
 
 	/**
-	* Alias to display full form.
-	*/
-	function displayFull() {
-		return $this->display('', true);
-	}
-
-	/**
 	* Display the form.
-	* @param string|bool $name Display individual field. All fields if false.
-	* @param bool $full If $name is false: Display full form if true. Only fields if false. Optional.
+	* @param string|bool $name If string: Display individual field. True: All fields with full form. False: All fields.
 	*/
-	function display($name='', $full=false)
+	function display($name=false)
 	{
 		// No name specified? Return them all in the order they were defined.
-		if($name == false)
+		if(!is_string($name))
 		{
 			$output = '';
-			
-			if ($full) {
+
+			if ($name) {
 				$output .= $this->displayState();
 				$output .= '<form method="post" action="'.$this->url_action.'" class="simplephpform">';
 			}
@@ -134,11 +126,11 @@ class SimplePHPForm
 			foreach($this->input_list as $input)
 				$output .= $this->display($input->name)."\n";
 
-			if ($full) {
+			if ($name) {
 				$output .= '<input type="submit" value="Submit Form" class="simplephpform_submit" />';
 				$output .= '</form>';
 			}
-			
+
 			return $output;
 		}
 
@@ -241,7 +233,7 @@ class SimplePHPForm
 		foreach($this->input_list as $input)
 			$input->data = $input->data_default;
 	}
-	
+
 	// Get data from the form.
 	function get($name)
 	{
@@ -256,7 +248,7 @@ class SimplePHPForm
 		// Was this form submitted? Or is this page new?
 		if($this->state == self::STATE_NEW)
 			return false; // Invalid by default.
-		
+
 		// Set state as successfull first, then run validation test gauntlet ...
 		$this->state = self::STATE_SUCCESS;
 
@@ -270,20 +262,20 @@ class SimplePHPForm
 				if(!empty($input->data_validation_flags[$i]))
 				{
 					// Sanitize flag by stripping whitespace, and making lowercase.
-					$flag = strtolower(trim($input->data_validation_flags[$i])); 
-					
+					$flag = strtolower(trim($input->data_validation_flags[$i]));
+
 					// *** If we have a test for this flag, run it! ***
-					
+
 					// Test: Is the entry required?
 					if($flag == 'required')
 						if(!$this->validateExists($input->data))
 							$input->state = self::STATE_FAIL;
-							
+
 					// Test: Is the entry an email?
 					if($flag == 'email')
 						if(!$this->validateEmail($input->data))
 							$input->state = self::STATE_FAIL;
-							
+
 					// Test: Is the entry a phone number?
 					if($flag == 'phone')
 						if(!$this->validatePhone($input->data))
@@ -296,13 +288,13 @@ class SimplePHPForm
 
 					// Process multi-part flags.
 					$flag_parts = explode(' ', $flag);
-					
+
 					// Test: Is there a max string length?
 					if($flag_parts[0] == 'lengthmax')
 						if(isset($flag_parts[1]))
 							if(!$this->validateLengthMax($input->data, $flag_parts[1]))
 								$input->state = self::STATE_FAIL;
-					
+
 					// Test: Is there a min string length?
 					if($flag_parts[0] == 'lengthmin')
 						if(isset($flag_parts[1]))
@@ -314,25 +306,25 @@ class SimplePHPForm
 						if(isset($flag_parts[1]))
 							if(!$this->validateSizeMax($input->data, $flag_parts[1]))
 								$input->state = self::STATE_FAIL;
-					
+
 					// Test: Is there a min number size?
 					if($flag_parts[0] == 'sizemin')
 						if(isset($flag_parts[1]))
 							if(!$this->validateSizeMin($input->data, $flag_parts[1]))
-								$input->state = self::STATE_FAIL;	
+								$input->state = self::STATE_FAIL;
 
 				}
 		}
-		
+
 		// Did ALL individual input entries validate successfully? If no, set form state to fail.
 		foreach($this->input_list as $input)
 			if($input->state == self::STATE_FAIL)
 				$this->state = self::STATE_FAIL;
-				
+
 		// No input entries? Also fail.
 		if(count($this->input_list) < 1)
 			$this->state = self::STATE_FAIL;
-	
+
 		if($this->state == self::STATE_SUCCESS)
 			return true;
 		else
