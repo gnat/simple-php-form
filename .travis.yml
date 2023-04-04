@@ -1,5 +1,5 @@
 language: php
-php: 7.0
+php: 8.0
 before_script:
   - wget http://getcomposer.org/composer.phar
   - php composer.phar install
