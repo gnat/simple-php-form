@@ -7,7 +7,7 @@
 	"license": "Zlib",
 	"authors": [{ "name": "Nathaniel Sabanski", "homepage": "http://nconsulting.ca", "role": "Developer" }],
 	"require": {
-		"php": "^5.3.0 || ^7.0"
+		"php": "^8.0"
 	},
 	"autoload": {
 		"classmap": ["SimplePHPForm.php"]
