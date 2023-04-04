@@ -1,9 +1,10 @@
-Simple PHP Form
-===============
+📝 Simple PHP Form
+==================
 
-Automatic PHP HTML Form generator class. Handles validation, helpers, warnings and more. Supports text fields, text areas, dropdowns, checkboxes, radio buttons and hidden fields.
+Automatic HTML forms with validation, helpers, warnings and more!
 
-Validation types supported: required, email, phone, number, lengthmax *, lengthmin *, sizemax *, sizemin *
+* Form fields: text fields, text areas, dropdowns, checkboxes, radio buttons and hidden fields.
+* Validation flags: required, email, phone, number, lengthmax *, lengthmin *, sizemax *, sizemin *
 
 ```php
 <?php 
@@ -43,30 +44,6 @@ Validation types supported: required, email, phone, number, lengthmax *, lengthm
 
 <img src="http://i.imgur.com/PNtyxTl.png" alt="Simple PHP Form Example 1" />
 
-**Using Composer**
-
-Add to your *composer.json* file and run *php composer update*.
-
-```json
-{
-    "name": "you/your-project",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/gnat/simple-php-form"
-        }
-    ],
-    "require": {
-        "gnat/simple-php-form": "dev-master"
-    }
-}
-```
-
 ## Keywords
 
 Forms, User Feedback, Model View Controller, PHP 8 Compatible, PHP 8+, email, input, simple, lean.
-
-## License
-
-This project is licensed under the zlib/libpng license.
-
