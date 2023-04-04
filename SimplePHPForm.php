@@ -1,6 +1,6 @@
 <?php
 /**
-* Simple PHP Form
+* Simple Forms for PHP
 *
 * Automatic form handling with validation, helpers, warnings and more. 
 * Form fields: text fields, text areas, dropdowns, checkboxes, radio buttons and hidden fields.
@@ -41,15 +41,15 @@ class SimplePHPForm
 	* @param string $text_help Helper text which is displayed to the User at fill-out time.
 	* @param string $text_error Error text which is displayed to the User when validation fails.
 	*/
-	function Add($name, $type, $data, $data_validation_flags, $text_title, $text_help, $text_error)
+	function add($name, $type, $data, $data_validation_flags, $text_title, $text_help, $text_error)
 	{
 		// Set default data.
 		$data_default = $data;
 
 		// Get form submission data from $_POST if it exists.
-		if(isset($_POST['simplephpform_'.$name]))  
+		if(isset($_POST['simplephpform_'.$name]))
 		{
-			$data = $_POST['simplephpform_'.$name]; 
+			$data = $_POST['simplephpform_'.$name];
 			$this->state = self::STATE_VALIDATE; // We've got data during this pass. Form should be validated.
 		}
 
@@ -71,7 +71,7 @@ class SimplePHPForm
 	* @param string $data Default data for the field.
 	* @param string $value Default display value for the field.
 	*/
-	function AddDropdownEntry($name, $data, $value)
+	function addDropdownEntry($name, $data, $value)
 	{
 		$this->input_list[$name]->dropdown_entries[$value] = $data;
 	}
@@ -82,13 +82,13 @@ class SimplePHPForm
 	* @param string $value Default display value for the field.
 	* @param string $data Default data for the field.
 	*/
-	function AddRadioButton($name, $value, $data)
+	function addRadioButton($name, $value, $data)
 	{
 		$this->input_list[$name]->radio_entries[$value] = $data;
 	}
 
 	// Display form state to User.
-	function DisplayState()
+	function displayState()
 	{
 		$output = '';
 
@@ -97,7 +97,7 @@ class SimplePHPForm
 		} if($this->state == self::STATE_SUCCESS) {
 			$output = '<div class="simplephpform_state_success">'.$this->message_success.'</div> <br />';
 		} if($this->state == self::STATE_FAIL) {
-			$output = '<div class="simplephpform_state_fail">'.$this->message_fail.'</div>';			
+			$output = '<div class="simplephpform_state_fail">'.$this->message_fail.'</div>';
 		} if($this->state == self::STATE_ERROR) {
 			$output = '<div class="simplephpform_state_fail">'.$this->message_error.'</div>';
 		} if($this->state == self::STATE_DUPLICATE) {
@@ -107,20 +107,30 @@ class SimplePHPForm
 		return $output."\n";
 	}
 
-	// Display form field.
-	function Display($name = '')
+	/**
+	* Display the form.
+	* @param string|bool $name Display individual field. All fields if false.
+	* @param bool $complete If name is false, display full form including <form> tags if true. Only fields if false. Optional.
+	*/
+	function display($name='', $full=false)
 	{
-		// No InputEntry specified? Return them all in the order they were defined.
-		if($name == '')
+		// No name specified? Return them all in the order they were defined.
+		if($name == false)
 		{
 			$output = '';
 			
-			$output .= $this->DisplayState();
-			$output .= '<form method="post" action="'.$this->url_action.'" class="simplephpform">';
+			if ($full) {
+				$output .= $this->displayState();
+				$output .= '<form method="post" action="'.$this->url_action.'" class="simplephpform">';
+			}
+
 			foreach($this->input_list as $input)
-				$output .= $this->Display($input->name)."\n";
-			$output .= '<input type="submit" value="Submit Form" class="simplephpform_submit" />';
-			$output .= '</form>';
+				$output .= $this->display($input->name)."\n";
+
+			if ($full) {
+				$output .= '<input type="submit" value="Submit Form" class="simplephpform_submit" />';
+				$output .= '</form>';
+			}
 			
 			return $output;
 		}
@@ -129,88 +139,89 @@ class SimplePHPForm
 		if(array_key_exists($name, $this->input_list))
 		{
 			$output = '';
-			$type = strtolower(trim($this->input_list[$name]->type));
-			
+			$target = $this->input_list[$name];
+			$type = strtolower(trim($target->type));
+
 			if($type == 'textarea') // Text area.
 			{
-				$output .= '<div class="simplephpform_title">'.$this->input_list[$name]->text_title.'</div>'."\n";
-				$output .= '<textarea name="simplephpform_'.$this->input_list[$name]->name.'" rows="'.$this->input_list[$name]->rows.'" cols="'.$this->input_list[$name]->columns.'">'.$this->input_list[$name]->data.'</textarea>'."\n";
-				
+				$output .= '<div class="simplephpform_title">'.$target->text_title.'</div>'."\n";
+				$output .= '<textarea name="simplephpform_'.$target->name.'" rows="'.$target->rows.'" cols="'.$target->columns.'">'.$target->data.'</textarea>'."\n";
+
 				// Helper or error message?
-				if($this->input_list[$name]->state != self::STATE_FAIL && $this->input_list[$name]->text_error != NULL)
-					$output .= '<div class="simplephpform_error">'.$this->input_list[$name]->text_error.'</div>'."\n";
-				else if($this->input_list[$name]->text_help != NULL)
-					$output .= '<div class="simplephpform_help">'.$this->input_list[$name]->text_help.'</div>'."\n";
+				if($target->state != self::STATE_FAIL && $target->text_error != NULL)
+					$output .= '<div class="simplephpform_error">'.$target->text_error.'</div>'."\n";
+				else if($target->text_help != NULL)
+					$output .= '<div class="simplephpform_help">'.$target->text_help.'</div>'."\n";
 			}
 			else if($type == 'dropdown') // Drop down menu.
 			{
-				$output .= '<div class="simplephpform_title">'.$this->input_list[$name]->text_title.'</div>'."\n";
-				$output .= '<select name="simplephpform_'.$this->input_list[$name]->name.'">'."\n";
-				
-				foreach($this->input_list[$name]->dropdown_entries as $drop_down_value => $drop_down_name)
+				$output .= '<div class="simplephpform_title">'.$target->text_title.'</div>'."\n";
+				$output .= '<select name="simplephpform_'.$target->name.'">'."\n";
+
+				foreach($target->dropdown_entries as $drop_down_value => $drop_down_name)
 				{
-					if($this->input_list[$name]->data == $drop_down_value)
+					if($target->data == $drop_down_value)
 						$output .= '<option value="'.$drop_down_value.'" selected="selected">'.$drop_down_name.'</option>'."\n";
 					else
 						$output .= '<option value="'.$drop_down_value.'">'.$drop_down_name.'</option>'."\n";
 				}
-					
+
 				$output .= '</select>'."\n";
-				
+
 				// Helper or error message?
-				if($this->input_list[$name]->state == self::STATE_FAIL)
-					$output .= '<div class="simplephpform_error">'.$this->input_list[$name]->text_error.'</div>'."\n";
-				else if($this->input_list[$name]->text_help != NULL)
-					$output .= '<div class="simplephpform_help">'.$this->input_list[$name]->text_help.'</div>'."\n";
+				if($target->state == self::STATE_FAIL)
+					$output .= '<div class="simplephpform_error">'.$target->text_error.'</div>'."\n";
+				else if($target->text_help != NULL)
+					$output .= '<div class="simplephpform_help">'.$target->text_help.'</div>'."\n";
 			}
 			else if($type == 'radio') // Radio button.
 			{
-				$output .= '<div class="simplephpform_title">'.$this->input_list[$name]->text_title.'</div><div class="simplephpform_radiobox">'."\n";
-				
-				foreach($this->input_list[$name]->radio_entries as $radio_name => $radio_value)
+				$output .= '<div class="simplephpform_title">'.$target->text_title.'</div><div class="simplephpform_radiobox">'."\n";
+
+				foreach($target->radio_entries as $radio_name => $radio_value)
 				{
-					if($this->input_list[$name]->data == $radio_value)
-						$output .= '<label><input type="radio" name="simplephpform_'.$this->input_list[$name]->name.'" value="'.$radio_value.'" checked="checked" > '.$radio_name."</label></input>\n";
+					if($target->data == $radio_value)
+						$output .= '<label><input type="radio" name="simplephpform_'.$target->name.'" value="'.$radio_value.'" checked="checked" > '.$radio_name."</label></input>\n";
 					else
-						$output .= '<label><input type="radio" name="simplephpform_'.$this->input_list[$name]->name.'" value="'.$radio_value.'" > '.$radio_name."</label></input>\n";
+						$output .= '<label><input type="radio" name="simplephpform_'.$target->name.'" value="'.$radio_value.'" > '.$radio_name."</label></input>\n";
 				}
 
 				$output .= '</div>';
 
 				// Helper or error message?
-				if($this->input_list[$name]->state == self::STATE_FAIL)
-					$output .= '<div class="simplephpform_error">'.$this->input_list[$name]->text_error.'</div>'."\n";
-				else if($this->input_list[$name]->text_help != NULL)
-					$output .= '<div class="simplephpform_help">'.$this->input_list[$name]->text_help.'</div>'."\n";
+				if($target->state == self::STATE_FAIL)
+					$output .= '<div class="simplephpform_error">'.$target->text_error.'</div>'."\n";
+				else if($target->text_help != NULL)
+					$output .= '<div class="simplephpform_help">'.$target->text_help.'</div>'."\n";
 			}
 			else if($type == 'checkbox') // Check box. Never needs an error message. Will never need an error or info message.
 			{
 				$output .= '<div class="simplephpform_title"></div><div style="float: left; margin-bottom: 2px;">'."\n";
 
-				if(boolval($this->input_list[$name]->data))
-					$output .= '<label><input type="'.$this->input_list[$name]->type.'" name="simplephpform_'.$this->input_list[$name]->name.'" checked="checked" />'.$this->input_list[$name]->text_title."</label>\n";
+				if(boolval($target->data))
+					$output .= '<label><input type="'.$target->type.'" name="simplephpform_'.$target->name.'" checked="checked" />'.$target->text_title."</label>\n";
 				else
-					$output .= '<label><input type="'.$this->input_list[$name]->type.'" name="simplephpform_'.$this->input_list[$name]->name.'" />'.$this->input_list[$name]->text_title."</label>\n";
-				
+					$output .= '<label><input type="'.$target->type.'" name="simplephpform_'.$target->name.'" />'.$target->text_title."</label>\n";
+
 				$output .= '</div>';
 			}
 			else if($type == 'hidden') // Hidden type, for metadata, etc.
 			{
-				$output .= '<input type="'.$this->input_list[$name]->type.'" name="simplephpform_'.$this->input_list[$name]->name.'" value="'.$this->input_list[$name]->data.'" />'."\n";
+				$output .= '<input type="'.$target->type.'" name="simplephpform_'.$target->name.'" value="'.$target->data.'" />'."\n";
 			}
 			else // Default. Textbox, password, etc.
 			{
-				$output .= '<div class="simplephpform_title">'.$this->input_list[$name]->text_title.'</div>'."\n";
+				$output .= '<div class="simplephpform_title">'.$target->text_title.'</div>'."\n";
 
-				$output .= '<label><input type="'.$this->input_list[$name]->type.'" name="simplephpform_'.$this->input_list[$name]->name.'" value="'.$this->input_list[$name]->data.'" />'."\n";
-			
-				if($this->input_list[$name]->state == self::STATE_FAIL)
-					$output .= '<div class="simplephpform_error">'.$this->input_list[$name]->text_error.'</div>'."\n";
-				else if($this->input_list[$name]->text_help != NULL)
-					$output .= '<div class="simplephpform_help">'.$this->input_list[$name]->text_help.'</div>'."\n";
+				$output .= '<label><input type="'.$target->type.'" name="simplephpform_'.$target->name.'" value="'.$target->data.'" />'."\n";
+
+				if($target->state == self::STATE_FAIL)
+					$output .= '<div class="simplephpform_error">'.$target->text_error.'</div>'."\n";
+				else if($target->text_help != NULL)
+					$output .= '<div class="simplephpform_help">'.$target->text_help.'</div>'."\n";
 
 				$output .= '</label>';
-			}	
+			}
 
 			$output .= '<div class="simplephpform_clear"></div>';
 			return $output;
@@ -218,14 +229,14 @@ class SimplePHPForm
 	}
 
 	// Reset all form data to defaults.
-	function Reset()
+	function reset()
 	{
 		foreach($this->input_list as $input)
 			$input->data = $input->data_default;
 	}
 	
-	// Get a value from the form.
-	function Get($name)
+	// Get data from the form.
+	function get($name)
 	{
 		if(isset($this->input_list[$name]->data))
 			return $this->input_list[$name]->data;
@@ -233,7 +244,7 @@ class SimplePHPForm
 	}
 
 	// Validate form data.
-	function Validate()
+	function validate()
 	{
 		// Was this form submitted? Or is this page new?
 		if($this->state == self::STATE_NEW)
@@ -258,22 +269,22 @@ class SimplePHPForm
 					
 					// Test: Is the entry required?
 					if($flag == 'required')
-						if(!$this->ValidateExists($input->data))
+						if(!$this->validateExists($input->data))
 							$input->state = self::STATE_FAIL;
 							
 					// Test: Is the entry an email?
 					if($flag == 'email')
-						if(!$this->ValidateEmail($input->data))
+						if(!$this->validateEmail($input->data))
 							$input->state = self::STATE_FAIL;
 							
 					// Test: Is the entry a phone number?
 					if($flag == 'phone')
-						if(!$this->ValidatePhone($input->data))
+						if(!$this->validatePhone($input->data))
 							$input->state = self::STATE_FAIL;
 
 					// Test: Is the entry a number?
 					if($flag == 'number')
-						if(!$this->ValidateNumber($input->data))
+						if(!$this->validateNumber($input->data))
 							$input->state = self::STATE_FAIL;
 
 					// Process multi-part flags.
@@ -282,25 +293,25 @@ class SimplePHPForm
 					// Test: Is there a max string length?
 					if($flag_parts[0] == 'lengthmax')
 						if(isset($flag_parts[1]))
-							if(!$this->ValidateLengthMax($input->data, $flag_parts[1]))
+							if(!$this->validateLengthMax($input->data, $flag_parts[1]))
 								$input->state = self::STATE_FAIL;
 					
 					// Test: Is there a min string length?
 					if($flag_parts[0] == 'lengthmin')
 						if(isset($flag_parts[1]))
-							if(!$this->ValidateLengthMin($input->data, $flag_parts[1]))
+							if(!$this->validateLengthMin($input->data, $flag_parts[1]))
 								$input->state = self::STATE_FAIL;
 
 					// Test: Is there a max number size?
 					if($flag_parts[0] == 'sizemax')
 						if(isset($flag_parts[1]))
-							if(!$this->ValidateSizeMax($input->data, $flag_parts[1]))
+							if(!$this->validateSizeMax($input->data, $flag_parts[1]))
 								$input->state = self::STATE_FAIL;
 					
 					// Test: Is there a min number size?
 					if($flag_parts[0] == 'sizemin')
 						if(isset($flag_parts[1]))
-							if(!$this->ValidateSizeMin($input->data, $flag_parts[1]))
+							if(!$this->validateSizeMin($input->data, $flag_parts[1]))
 								$input->state = self::STATE_FAIL;	
 
 				}
@@ -322,7 +333,7 @@ class SimplePHPForm
 	}
 
 	// Does data exist?
-	function ValidateExists($data)
+	function validateExists($data)
 	{
 		if($data != '')
 			return true;
@@ -330,7 +341,7 @@ class SimplePHPForm
 	}
 
 	// Valid email?
-	function ValidateEmail($data)
+	function validateEmail($data)
 	{
 		if(strlen($data) > 5 && strstr($data, '@') && strstr($data, '.') && strstr($data, ' ') == false)
 			return true;
@@ -338,7 +349,7 @@ class SimplePHPForm
 	}
 
 	// Valid phone number?
-	function ValidatePhone($data)
+	function validatePhone($data)
 	{
 		if(intval($data) && strlen($data) > 10 && strlen($data) < 30)
 			return true;
@@ -346,7 +357,7 @@ class SimplePHPForm
 	}
 
 	// Valid number?
-	function ValidateNumber($data)
+	function validateNumber($data)
 	{
 		if(is_numeric($data))
 			return true;
@@ -354,7 +365,7 @@ class SimplePHPForm
 	}
 
 	// Valid maximum string length?
-	function ValidateLengthMax($data, $size)
+	function validateLengthMax($data, $size)
 	{
 		if(strlen($data) < $size)
 			return true;
@@ -362,7 +373,7 @@ class SimplePHPForm
 	}
 
 	// Valid minimum string length?
-	function ValidateLengthMin($data, $size)
+	function validateLengthMin($data, $size)
 	{
 		if(strlen($data) > $size)
 			return true;
@@ -370,7 +381,7 @@ class SimplePHPForm
 	}
 
 	// Valid maximum number size?
-	function ValidateSizeMax($data, $size)
+	function validateSizeMax($data, $size)
 	{
 		if(is_numeric($data))
 			if($data < $size)
@@ -379,7 +390,7 @@ class SimplePHPForm
 	}
 
 	// Valid minimum number size?
-	function ValidateSizeMin($data, $size)
+	function validateSizeMin($data, $size)
 	{
 		if(is_numeric($data))
 			if($data > $size)

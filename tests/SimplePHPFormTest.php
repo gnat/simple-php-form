@@ -7,123 +7,123 @@ class SimplePHPFormTest extends TestCase
 	public function testInit()
 	{
 		$form = new SimplePHPForm("http://google.com");
-		$this->assertContains('<form method="post" action="http://google.com" class="simplephpform">', $form->Display());
+		$this->assertContains('<form method="post" action="http://google.com" class="simplephpform">', $form->display());
 	}
 
 	public function testDisplayState()
 	{
 		$form = new SimplePHPForm();
-		$this->assertContains('simplephpform_state_untouched', $form->DisplayState());
+		$this->assertContains('simplephpform_state_untouched', $form->displayState());
 	}
 
 	public function testAddText()
 	{
 		$form = new SimplePHPForm();
-		$form->Add('name', 'text', '', array('required'), 'Name', '', 'Your name is required.');
-		$this->assertContains('Name', $form->Display('name'));
+		$form->add('name', 'text', '', array('required'), 'Name', '', 'Your name is required.');
+		$this->assertContains('Name', $form->display('name'));
 	}
 
 	public function testAddDropdown()
 	{
 		$form = new SimplePHPForm();
-		$form->Add('race', 'dropdown', '', array('required'), 'Your Race', '', 'Your selection is required.');
-		$form->AddDropdownEntry('race', 'Ready to roll out! (Terran)', 'terran');
-		$form->AddDropdownEntry('race', 'My life for Auir! (Protoss)', 'protoss');
-		$form->AddDropdownEntry('race', 'Heres for the swarm! (Zerg)', 'zerg');
-		$form->AddDropdownEntry('race', 'Ballin out of control! (Random)', 'random');
-		$this->assertContains('<select name="simplephpform_race">', $form->Display());
-		$this->assertContains('<option value="terran">Ready to roll out! (Terran)</option>', $form->Display());
+		$form->add('race', 'dropdown', '', array('required'), 'Your Race', '', 'Your selection is required.');
+		$form->addDropdownEntry('race', 'Ready to roll out! (Terran)', 'terran');
+		$form->addDropdownEntry('race', 'My life for Auir! (Protoss)', 'protoss');
+		$form->addDropdownEntry('race', 'Heres for the swarm! (Zerg)', 'zerg');
+		$form->addDropdownEntry('race', 'Ballin out of control! (Random)', 'random');
+		$this->assertContains('<select name="simplephpform_race">', $form->display());
+		$this->assertContains('<option value="terran">Ready to roll out! (Terran)</option>', $form->display());
 	}
 
 	public function testAddRadioButton()
 	{
 		$form = new SimplePHPForm();
-		$form->Add('beverage', 'radio', '', array('required'), 'Preferred Beverage', '', 'Your selection is required.');
-		$form->AddRadioButton('beverage', 'Coffee', 0);
-		$form->AddRadioButton('beverage', 'Tea', 1);
-		$form->AddRadioButton('beverage', 'Bawls', 2);
-		$this->assertContains('<label><input type="radio" name="simplephpform_beverage" value="1" > Tea</label>', $form->Display());
+		$form->add('beverage', 'radio', '', array('required'), 'Preferred Beverage', '', 'Your selection is required.');
+		$form->addRadioButton('beverage', 'Coffee', 0);
+		$form->addRadioButton('beverage', 'Tea', 1);
+		$form->addRadioButton('beverage', 'Bawls', 2);
+		$this->assertContains('<label><input type="radio" name="simplephpform_beverage" value="1" > Tea</label>', $form->display());
 	}
 
 	public function testAddTextArea()
 	{
 		$form = new SimplePHPForm();
-		$form->Add('suggestions', 'textarea', '', array(''), 'Suggestion Box', 'Have your voice heard!', '');
-		$this->assertContains('<textarea name="simplephpform_suggestions"', $form->Display());
+		$form->add('suggestions', 'textarea', '', array(''), 'Suggestion Box', 'Have your voice heard!', '');
+		$this->assertContains('<textarea name="simplephpform_suggestions"', $form->display());
 	}
 
 	public function testAddCheckbox()
 	{
 		$form = new SimplePHPForm();
-		$form->Add('notify', 'checkbox', true, array(''), 'Notify me of future events in my area.', '', '');
-		$this->assertContains('<input type="checkbox" name="simplephpform_notify"', $form->Display());
+		$form->add('notify', 'checkbox', true, array(''), 'Notify me of future events in my area.', '', '');
+		$this->assertContains('<input type="checkbox" name="simplephpform_notify"', $form->display());
 	}
 
 	public function testValidateExists()
 	{
 		$form = new SimplePHPForm();
-		$this->assertTrue($form->ValidateExists("Hello World"));
-		$this->assertFalse($form->ValidateExists(null));
+		$this->assertTrue($form->validateExists("Hello World"));
+		$this->assertFalse($form->validateExists(null));
 	}
 
 	public function testValidateEmail()
 	{
 		$form = new SimplePHPForm();
-		$this->assertTrue($form->ValidateEmail("billyg@microsoft.com"));
-		$this->assertTrue($form->ValidateEmail("blah__@google.co.uk"));
-		$this->assertFalse($form->ValidateEmail("blah__2"));
-		$this->assertFalse($form->ValidateEmail("@bA84.com"));
+		$this->assertTrue($form->validateEmail("billyg@microsoft.com"));
+		$this->assertTrue($form->validateEmail("blah__@google.co.uk"));
+		$this->assertFalse($form->validateEmail("blah__2"));
+		$this->assertFalse($form->validateEmail("@bA84.com"));
 	}
 
 	public function testValidatePhone()
 	{
 		$form = new SimplePHPForm();
-		$this->assertTrue($form->ValidatePhone("123 123 4568"));
-		$this->assertTrue($form->ValidatePhone("1(299)A 222 2222"));
-		$this->assertFalse($form->ValidatePhone("99999999999999999999999999999999"));
-		$this->assertFalse($form->ValidatePhone("Blah blah"));
+		$this->assertTrue($form->validatePhone("123 123 4568"));
+		$this->assertTrue($form->validatePhone("1(299)A 222 2222"));
+		$this->assertFalse($form->validatePhone("99999999999999999999999999999999"));
+		$this->assertFalse($form->validatePhone("Blah blah"));
 	}
 
 	public function testValidateNumber()
 	{
 		$form = new SimplePHPForm();
-		$this->assertTrue($form->ValidateNumber(12315));
-		$this->assertTrue($form->ValidateNumber("-2393939"));
-		$this->assertFalse($form->ValidateNumber("0000bbbb"));
-		$this->assertFalse($form->ValidateNumber("Blah blah"));
+		$this->assertTrue($form->validateNumber(12315));
+		$this->assertTrue($form->validateNumber("-2393939"));
+		$this->assertFalse($form->validateNumber("0000bbbb"));
+		$this->assertFalse($form->validateNumber("Blah blah"));
 	}
 
 	public function testValidateLengthMax()
 	{
 		$form = new SimplePHPForm();
-		$this->assertTrue($form->ValidateLengthMax("a992a92a", 10));
-		$this->assertTrue($form->ValidateLengthMax(32352, 10));
-		$this->assertFalse($form->ValidateLengthMax("asdasd", 1));
-		$this->assertFalse($form->ValidateLengthMax("asd243asd", 6));
+		$this->assertTrue($form->validateLengthMax("a992a92a", 10));
+		$this->assertTrue($form->validateLengthMax(32352, 10));
+		$this->assertFalse($form->validateLengthMax("asdasd", 1));
+		$this->assertFalse($form->validateLengthMax("asd243asd", 6));
 	}
 
 	public function testValidateLengthMin()
 	{
 		$form = new SimplePHPForm();
-		$this->assertTrue($form->ValidateLengthMin("a992a92a", -50));
-		$this->assertTrue($form->ValidateLengthMin(32352, 4));
-		$this->assertFalse($form->ValidateLengthMin("asdasd", 10));
-		$this->assertFalse($form->ValidateLengthMin("asd243asd", 9999));
+		$this->assertTrue($form->validateLengthMin("a992a92a", -50));
+		$this->assertTrue($form->validateLengthMin(32352, 4));
+		$this->assertFalse($form->validateLengthMin("asdasd", 10));
+		$this->assertFalse($form->validateLengthMin("asd243asd", 9999));
 	}
 
 	public function testValidateSizeMax()
 	{
 		$form = new SimplePHPForm();
-		$this->assertTrue($form->ValidateSizeMax(20, 20));
-		$this->assertTrue($form->ValidateSizeMax(1, 50));
-		$this->assertFalse($form->ValidateSizeMax(30, 1));
+		$this->assertTrue($form->validateSizeMax(20, 20));
+		$this->assertTrue($form->validateSizeMax(1, 50));
+		$this->assertFalse($form->validateSizeMax(30, 1));
 	}
 
 	public function testValidateSizeMin()
 	{
 		$form = new SimplePHPForm();
-		$this->assertTrue($form->ValidateSizeMin(20, 20));
-		$this->assertTrue($form->ValidateSizeMin(1, -50));
-		$this->assertFalse($form->ValidateSizeMin(0, 1));
+		$this->assertTrue($form->validateSizeMin(20, 20));
+		$this->assertTrue($form->validateSizeMin(1, -50));
+		$this->assertFalse($form->validateSizeMin(0, 1));
 	}
 }

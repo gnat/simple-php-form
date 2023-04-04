@@ -13,32 +13,32 @@
 	);
 
 	// Add text inputs. (input type, name/id, default data, validation flags, label, helper message, validation warning message).
-	$form->Add('realname', 'text', 'Default text.', array('required'), 'Name', '', 'Your name is required.');
-	$form->Add('username', 'text', '', array('required', 'lengthmin 2'), 'Screen Name', '', 'Your screen name is required.');
-	$form->Add('email', 'text', '', array('required', 'email'), 'Email', '', 'Your email is required.');
-	$form->Add('phone', 'text', '', array('phone'), 'Phone Number', 'We\'ll send you a quick reminder the day before the event!', 'Your phone number must be valid.');
+	$form->add('realname', 'text', 'Default text.', array('required'), 'Name', '', 'Your name is required.');
+	$form->add('username', 'text', '', array('required', 'lengthmin 2'), 'Screen Name', '', 'Your screen name is required.');
+	$form->add('email', 'text', '', array('required', 'email'), 'Email', '', 'Your email is required.');
+	$form->add('phone', 'text', '', array('phone'), 'Phone Number', 'We\'ll send you a quick reminder the day before the event!', 'Your phone number must be valid.');
 	
 	// Add text area.
-	$form->Add('suggestions', 'textarea', '', array(''), 'Suggestion Box', 'Have your voice heard!', '');
+	$form->add('suggestions', 'textarea', '', array(''), 'Suggestion Box', 'Have your voice heard!', '');
 	
 	// Add drop down list.
-	$form->Add('race', 'dropdown', '', array('required'), 'Your Race', '', 'Your selection is required.');
-	$form->AddDropdownEntry('race', 'Ready to roll out! (Terran)', 'terran');
-	$form->AddDropdownEntry('race', 'My life for Auir! (Protoss)', 'protoss');
-	$form->AddDropdownEntry('race', 'Here\'s for the swarm! (Zerg)', 'zerg');
-	$form->AddDropdownEntry('race', 'Ballin out of control! (Random)', 'random');
+	$form->add('race', 'dropdown', '', array('required'), 'Your Race', '', 'Your selection is required.');
+	$form->addDropdownEntry('race', 'Ready to roll out! (Terran)', 'terran');
+	$form->addDropdownEntry('race', 'My life for Auir! (Protoss)', 'protoss');
+	$form->addDropdownEntry('race', 'Here\'s for the swarm! (Zerg)', 'zerg');
+	$form->addDropdownEntry('race', 'Ballin out of control! (Random)', 'random');
 	
 	// Add radio button list.
-	$form->Add('beverage', 'radio', '', array('required'), 'Preferred Beverage', '', 'Your selection is required.');
-	$form->AddRadioButton('beverage', 'Coffee', 0);
-	$form->AddRadioButton('beverage', 'Tea', 1);
-	$form->AddRadioButton('beverage', 'Bawls', 2);
+	$form->add('beverage', 'radio', '', array('required'), 'Preferred Beverage', '', 'Your selection is required.');
+	$form->addRadioButton('beverage', 'Coffee', 0);
+	$form->addRadioButton('beverage', 'Tea', 1);
+	$form->addRadioButton('beverage', 'Bawls', 2);
 
 	// Add check box.
-	$form->Add('notify', 'checkbox', true, array(''), 'Notify me of future gaming events in my area.', '', '');
+	$form->add('notify', 'checkbox', true, array(''), 'Notify me of future gaming events in my area.', '', '');
 
 	// Did the form validate successfully?
-	if($form->Validate())
+	if($form->validate())
 	{
 		// Place successful form submission code here. This example: 
 		// 1. Checks for email duplicate in database.
@@ -88,7 +88,7 @@
 
 				// Is this email already registered?
 				$query = $dbh->prepare("SELECT email FROM attendees WHERE email=:email LIMIT 1");
-				$query->bindParam(':email', $form->Get('email'), PDO::PARAM_STR, 45);
+				$query->bindParam(':email', $form->get('email'), PDO::PARAM_STR, 45);
 				$query->execute();
 
 				if(count($query->fetchAll()) > 0)
@@ -97,14 +97,14 @@
 				{
 					// Insert new user into database.
 					$query = $dbh->prepare("INSERT INTO ".DB_TABLE."(realname,username,email,phone,race,beverage,suggestions,notify) VALUES (:realname,:username,:email,:phone,:race,:beverage,:suggestions,:notify) ON DUPLICATE KEY UPDATE realname=:realname,username=:username,email=:email,phone=:phone,race=:race,beverage=:beverage,suggestions=:suggestions,notify=:notify");
-					$query->bindParam(':realname', $form->Get('realname'), PDO::PARAM_STR, 45);
-					$query->bindParam(':username', $form->Get('username'), PDO::PARAM_STR, 45);
-					$query->bindParam(':email', $form->Get('email'), PDO::PARAM_STR, 45);
-					$query->bindParam(':phone', $form->Get('phone'), PDO::PARAM_STR, 45);
-					$query->bindParam(':race', $form->Get('race'), PDO::PARAM_STR, 45);
-					$query->bindParam(':beverage', $form->Get('beverage'), PDO::PARAM_INT);
-					$query->bindParam(':suggestions', $form->Get('suggestions'), PDO::PARAM_STR, 1000);
-					$query->bindParam(':notify', $form->Get('notify'), PDO::PARAM_BOOL);
+					$query->bindParam(':realname', $form->get('realname'), PDO::PARAM_STR, 45);
+					$query->bindParam(':username', $form->get('username'), PDO::PARAM_STR, 45);
+					$query->bindParam(':email', $form->get('email'), PDO::PARAM_STR, 45);
+					$query->bindParam(':phone', $form->get('phone'), PDO::PARAM_STR, 45);
+					$query->bindParam(':race', $form->get('race'), PDO::PARAM_STR, 45);
+					$query->bindParam(':beverage', $form->get('beverage'), PDO::PARAM_INT);
+					$query->bindParam(':suggestions', $form->get('suggestions'), PDO::PARAM_STR, 1000);
+					$query->bindParam(':notify', $form->get('notify'), PDO::PARAM_BOOL);
 					$query->execute();
 				
 					// Send a confirmation email!
@@ -115,7 +115,7 @@
 
 						$header = "From: ".MAIL_FROM."\r\n"."Reply-To: ".MAIL_FROM."\r\n";
 						
-						mail($form->Get('email'), MAIL_SUBJECT, MAIL_CONTENT, $header);
+						mail($form->get('email'), MAIL_SUBJECT, MAIL_CONTENT, $header);
 					}
 				}
 
@@ -128,7 +128,7 @@
 		}
 
 		// Finally, reset the form, clearing it to the default state.
-		$form->Reset();
+		$form->reset();
 	}
 ?>
 
@@ -140,18 +140,18 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="css/simplephpform_default.css" />
     </head>
 	<body>
-		<?php echo $form->DisplayState(); ?>
+		<?php echo $form->displayState(); ?>
 		<form method="post" action="advanced.php" class="simplephpform">
 			<?php 
 				// Display each field individually. You can alternatively display them all as a full form with $form->Display();
-				echo $form->Display('realname'); 
-				echo $form->Display('username');
-				echo $form->Display('email');
-				echo $form->Display('phone');
-				echo $form->Display('race');
-				echo $form->Display('beverage');
-				echo $form->Display('suggestions');
-				echo $form->Display('notify');
+				echo $form->display('realname');
+				echo $form->display('username');
+				echo $form->display('email');
+				echo $form->display('phone');
+				echo $form->display('race');
+				echo $form->display('beverage');
+				echo $form->display('suggestions');
+				echo $form->display('notify');
 			?>
 			<input type="submit" value="Submit Form" class="simplephpform_submit" />
 		</form>
