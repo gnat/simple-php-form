@@ -14,13 +14,13 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>SimplePHPForm Basic Example</title>
 		<link rel="stylesheet" type="text/css" media="screen" href="css/simplephpform_default.css" />
     </head>
 	<body>
-		<?php echo $form->display(true); ?>
+		<?php echo $form->display(); ?>
 	</body>
 </html>	
