@@ -42,7 +42,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>SimplePHPForm Centered Example</title>
@@ -51,7 +51,7 @@
     </head>
 	<body>
 		<div class="simplephpform_wrapper">
-			<?php echo $form->display(true); ?>
+			<?php echo $form->display(); ?>
 		</div>
 	</body>
 </html>
