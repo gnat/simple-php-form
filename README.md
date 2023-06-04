@@ -22,12 +22,12 @@ Automatic HTML forms with validation, helpers, warnings and more!
   }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <link rel="stylesheet" type="text/css" media="screen" href="css/simplephpform_default.css" />
   </head>
   <body>
-    <?php echo $form->display(true); ?>
+    <?php echo $form->display(); ?>
   </body>
 </html> 
 ```
