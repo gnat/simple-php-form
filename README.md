@@ -11,8 +11,8 @@ Automatic HTML forms with validation, helpers, warnings and more!
   require('SimplePHPForm.php'); 
   
   $form = new SimplePHPForm();
-  $form->add('name', 'text', '', array('required'), 'Name', '', 'Your name is required.');
-  $form->add('email', 'text', '', array('required', 'email'), 'Email', '', 'Your email is required.');
+  $form->add('name', 'text', '', ['required'], 'Name', '', 'Your name is required.');
+  $form->add('email', 'text', '', ['required', 'email'], 'Email', '', 'Your email is required.');
 
   if($form->validate()) // Did the form validate successfully?
   {
