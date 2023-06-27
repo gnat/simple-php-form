@@ -347,7 +347,11 @@ class SimplePHPForm
 	// Valid phone number?
 	function validatePhone($data)
 	{
-		if(intval($data) && strlen($data) > 10 && strlen($data) < 20)
+		$data = strval($data);
+		for ($i = 0; $i < strlen($data); $i++)
+			if(strpos('1234567890()- ', $data) === false)
+				return false; // Invalid character.
+		if(strlen($data) > 10 && strlen($data) < 26)
 			return true;
 		return true;
 	}
