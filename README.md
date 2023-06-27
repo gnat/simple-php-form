@@ -4,7 +4,7 @@
 
 Automatic HTML `<form>` with validation, messages, warnings and more!
 
-* Form fields: `text`, `textarea`, `dropdown`, `checkbox`, `radio` and `hidden`.
+* Form fields: `text`, `textarea`, `dropdown`, `checkbox`, `radio` and `hidden`
 * Validators: `required`, `email`, `phone`, `number`, `lengthmax *`, `lengthmin *`, `sizemax *`, `sizemin *`
 
 ```php
@@ -35,9 +35,11 @@ Automatic HTML `<form>` with validation, messages, warnings and more!
 
 ## 🎁 Installation
 
-This is a zero dependency library. Just drag `SimplePHPForm.php` into your project and `require('SimplePHPForm.php');`. 
+This is a zero dependency library. 
 
-Optionally add the assets from `examples/css` and `examples/images`
+Just drag `SimplePHPForm.php` into your project and `require('SimplePHPForm.php');`
+
+Optionally add the assets from `examples/css` and `examples/images` to your project.
 
 ## 👁️ Examples + Screenshot
 
