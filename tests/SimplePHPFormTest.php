@@ -19,14 +19,14 @@ class SimplePHPFormTest extends TestCase
 	public function testAddText()
 	{
 		$form = new SimplePHPForm();
-		$form->add('name', 'text', '', array('required'), 'Name', '', 'Your name is required.');
+		$form->add('name', 'text', '', ['required'], 'Name', '', 'Your name is required.');
 		$this->assertContains('Name', $form->display('name'));
 	}
 
 	public function testAddDropdown()
 	{
 		$form = new SimplePHPForm();
-		$form->add('race', 'dropdown', '', array('required'), 'Your Race', '', 'Your selection is required.');
+		$form->add('race', 'dropdown', '', ['required'], 'Your Race', '', 'Your selection is required.');
 		$form->addDropdownEntry('race', 'Ready to roll out! (Terran)', 'terran');
 		$form->addDropdownEntry('race', 'My life for Auir! (Protoss)', 'protoss');
 		$form->addDropdownEntry('race', 'Heres for the swarm! (Zerg)', 'zerg');
@@ -38,7 +38,7 @@ class SimplePHPFormTest extends TestCase
 	public function testAddRadioButton()
 	{
 		$form = new SimplePHPForm();
-		$form->add('beverage', 'radio', '', array('required'), 'Preferred Beverage', '', 'Your selection is required.');
+		$form->add('beverage', 'radio', '', ['required'], 'Preferred Beverage', '', 'Your selection is required.');
 		$form->addRadioButton('beverage', 'Coffee', 0);
 		$form->addRadioButton('beverage', 'Tea', 1);
 		$form->addRadioButton('beverage', 'Bawls', 2);
@@ -48,14 +48,14 @@ class SimplePHPFormTest extends TestCase
 	public function testAddTextArea()
 	{
 		$form = new SimplePHPForm();
-		$form->add('suggestions', 'textarea', '', array(''), 'Suggestion Box', 'Have your voice heard!', '');
+		$form->add('suggestions', 'textarea', '', [''], 'Suggestion Box', 'Have your voice heard!', '');
 		$this->assertContains('<textarea name="simplephpform_suggestions"', $form->display());
 	}
 
 	public function testAddCheckbox()
 	{
 		$form = new SimplePHPForm();
-		$form->add('notify', 'checkbox', true, array(''), 'Notify me of future events in my area.', '', '');
+		$form->add('notify', 'checkbox', true, [''], 'Notify me of future events in my area.', '', '');
 		$this->assertContains('<input type="checkbox" name="simplephpform_notify"', $form->display());
 	}
 
