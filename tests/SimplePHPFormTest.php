@@ -7,20 +7,20 @@ class SimplePHPFormTest extends TestCase
 	public function testInit()
 	{
 		$form = new SimplePHPForm("http://google.com");
-		$this->assertContains('<form method="post" action="http://google.com" class="simplephpform">', $form->display());
+		$this->assertStringContainsStringIgnoringCase('<form method="post" action="http://google.com" class="simplephpform">', $form->display());
 	}
 
 	public function testDisplayState()
 	{
 		$form = new SimplePHPForm();
-		$this->assertContains('simplephpform_state_untouched', $form->displayState());
+		$this->assertStringContainsStringIgnoringCase('simplephpform_state_untouched', $form->displayState());
 	}
 
 	public function testAddText()
 	{
 		$form = new SimplePHPForm();
 		$form->add('name', 'text', '', ['required'], 'Name', '', 'Your name is required.');
-		$this->assertContains('Name', $form->display('name'));
+		$this->assertStringContainsStringIgnoringCase('Name', $form->display('name'));
 	}
 
 	public function testAddDropdown()
@@ -31,8 +31,8 @@ class SimplePHPFormTest extends TestCase
 		$form->addDropdownEntry('race', 'My life for Auir! (Protoss)', 'protoss');
 		$form->addDropdownEntry('race', 'Heres for the swarm! (Zerg)', 'zerg');
 		$form->addDropdownEntry('race', 'Ballin out of control! (Random)', 'random');
-		$this->assertContains('<select name="simplephpform_race">', $form->display());
-		$this->assertContains('<option value="terran">Ready to roll out! (Terran)</option>', $form->display());
+		$this->assertStringContainsStringIgnoringCase('<select name="simplephpform_race">', $form->display());
+		$this->assertStringContainsStringIgnoringCase('<option value="terran">Ready to roll out! (Terran)</option>', $form->display());
 	}
 
 	public function testAddRadioButton()
@@ -42,21 +42,21 @@ class SimplePHPFormTest extends TestCase
 		$form->addRadioButton('beverage', 'Coffee', 0);
 		$form->addRadioButton('beverage', 'Tea', 1);
 		$form->addRadioButton('beverage', 'Bawls', 2);
-		$this->assertContains('<label><input type="radio" name="simplephpform_beverage" value="1" > Tea</label>', $form->display());
+		$this->assertStringContainsStringIgnoringCase('<label><input type="radio" name="simplephpform_beverage" value="1" > Tea</label>', $form->display());
 	}
 
 	public function testAddTextArea()
 	{
 		$form = new SimplePHPForm();
 		$form->add('suggestions', 'textarea', '', [''], 'Suggestion Box', 'Have your voice heard!', '');
-		$this->assertContains('<textarea name="simplephpform_suggestions"', $form->display());
+		$this->assertStringContainsStringIgnoringCase('<textarea name="simplephpform_suggestions"', $form->display());
 	}
 
 	public function testAddCheckbox()
 	{
 		$form = new SimplePHPForm();
 		$form->add('notify', 'checkbox', true, [''], 'Notify me of future events in my area.', '', '');
-		$this->assertContains('<input type="checkbox" name="simplephpform_notify"', $form->display());
+		$this->assertStringContainsStringIgnoringCase('<input type="checkbox" name="simplephpform_notify"', $form->display());
 	}
 
 	public function testValidateExists()
