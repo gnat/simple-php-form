@@ -349,7 +349,7 @@ class SimplePHPForm
 	{
 		$data = strval($data);
 		for ($i = 0; $i < strlen($data); $i++)
-			if(strpos('1234567890()- ', $data) === false)
+			if(strpos('1234567890()- ', $data[$i]) === false)
 				return false; // Invalid character.
 		if(strlen($data) > 10 && strlen($data) < 26)
 			return true;
