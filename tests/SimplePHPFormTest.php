@@ -79,7 +79,7 @@ class SimplePHPFormTest extends TestCase
 	{
 		$form = new SimplePHPForm();
 		$this->assertTrue($form->validatePhone("123 123 4568"));
-		$this->assertTrue($form->validatePhone("1(299)A 222 2222"));
+		$this->assertFalse($form->validatePhone("1(299)A 222 2222"));
 		$this->assertFalse($form->validatePhone("99999999999999999999999999999999"));
 		$this->assertFalse($form->validatePhone("Blah blah"));
 	}
