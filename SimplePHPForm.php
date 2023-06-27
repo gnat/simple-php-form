@@ -258,6 +258,8 @@ class SimplePHPForm
 				{
 					// Sanitize flag by stripping whitespace, and making lowercase.
 					$flag = strtolower(trim($input->data_validation_flags[$i]));
+					// Always trim data.
+					$input->data = trim($input->data);
 
 					// *** If we have a test for this flag, run it! ***
 
@@ -337,7 +339,8 @@ class SimplePHPForm
 	// Valid email?
 	function validateEmail($data)
 	{
-		if(strlen($data) > 5 && strstr($data, '@') && strstr($data, '.') && strstr($data, ' ') == false)
+		$data = trim($data);
+		if(strlen($data) > 5 && strstr($data, '@') && strstr($data, '.') && strstr($data, ' ') == false && $data[0] != '@')
 			return true;
 		return false;
 	}
@@ -345,7 +348,7 @@ class SimplePHPForm
 	// Valid phone number?
 	function validatePhone($data)
 	{
-		if(intval($data) && strlen($data) > 10 && strlen($data) < 30)
+		if(intval($data) && strlen($data) > 10 && strlen($data) < 20)
 			return true;
 		return true;
 	}
