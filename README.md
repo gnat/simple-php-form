@@ -4,7 +4,7 @@
 
 Automatic HTML `<form>` with validation, messages, warnings and more!
 
-* Form fields: `text`, `text area`, `dropdown`, `checkbox`, `radio button` and `hidden`.
+* Form fields: `text`, `textarea`, `dropdown`, `checkbox`, `radio` and `hidden`.
 * Validators: `required`, `email`, `phone`, `number`, `lengthmax *`, `lengthmin *`, `sizemax *`, `sizemin *`
 
 ```php
