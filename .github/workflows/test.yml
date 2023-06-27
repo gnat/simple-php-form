@@ -18,7 +18,7 @@ jobs:
         with:
           fetch-depth: 0
       - uses: actions/setup-php@v3
-      - uses: php-actions/composer@v6
+      #- uses: php-actions/composer@v6
       - uses: php-actions/phpunit@v3
       #- wget http://getcomposer.org/composer.phar
       #- php composer.phar install
