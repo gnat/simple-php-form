@@ -1,5 +1,6 @@
 📝 Simple PHP Form
 ==================
+![workflow](https://github.com/gnat/simple-php-form/actions/workflows/test.yml/badge.svg)
 
 Automatic HTML forms with validation, helpers, warnings and more!
 
