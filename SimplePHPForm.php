@@ -339,7 +339,6 @@ class SimplePHPForm
 	// Valid email?
 	function validateEmail($data)
 	{
-		$data = trim($data);
 		if(strlen($data) > 5 && strstr($data, '@') && strstr($data, '.') && strstr($data, ' ') == false && $data[0] != '@')
 			return true;
 		return false;
@@ -364,7 +363,7 @@ class SimplePHPForm
 	// Valid maximum string length?
 	function validateLengthMax($data, $size)
 	{
-		if(strlen($data) < $size)
+		if(strlen($data) <= $size)
 			return true;
 		return false;
 	}
@@ -372,7 +371,7 @@ class SimplePHPForm
 	// Valid minimum string length?
 	function validateLengthMin($data, $size)
 	{
-		if(strlen($data) > $size)
+		if(strlen($data) >= $size)
 			return true;
 		return false;
 	}
@@ -381,7 +380,7 @@ class SimplePHPForm
 	function validateSizeMax($data, $size)
 	{
 		if(is_numeric($data))
-			if($data < $size)
+			if($data <= $size)
 				return true;
 		return false;
 	}
@@ -390,7 +389,7 @@ class SimplePHPForm
 	function validateSizeMin($data, $size)
 	{
 		if(is_numeric($data))
-			if($data > $size)
+			if($data >= $size)
 				return true;
 		return false;
 	}
