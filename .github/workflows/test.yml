@@ -1,0 +1,26 @@
+name: Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version: [8.x]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: ubuntu-latest
+        uses: actions/setup-php@v3
+        uses: php-actions/composer@v6 # or alternative dependency management
+        uses: php-actions/phpunit@v3
+      #- wget http://getcomposer.org/composer.phar
+      #- php composer.phar install
+      - run: phpunit --bootstrap ./vendor/autoload.php ./tests/*
