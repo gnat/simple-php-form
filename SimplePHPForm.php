@@ -353,7 +353,7 @@ class SimplePHPForm
 				return false; // Invalid character.
 		if(strlen($data) > 10 && strlen($data) < 26)
 			return true;
-		return true;
+		return false;
 	}
 
 	// Valid number?
