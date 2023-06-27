@@ -2,10 +2,10 @@
 ==================
 ![workflow](https://github.com/gnat/simple-php-form/actions/workflows/test.yml/badge.svg)
 
-Automatic HTML forms with validation, helpers, warnings and more!
+Automatic HTML `<form>` with validation, messages, warnings and more!
 
-* Form fields: text fields, text areas, dropdowns, checkboxes, radio buttons and hidden fields.
-* Validation flags: required, email, phone, number, lengthmax *, lengthmin *, sizemax *, sizemin *
+* Form fields: `text`, `text area`, `dropdown`, `checkbox`, `radio button` and `hidden`.
+* Validators: `required`, `email`, `phone`, `number`, `lengthmax *`, `lengthmin *`, `sizemax *`, `sizemin *`
 
 ```php
 <?php 
@@ -33,15 +33,17 @@ Automatic HTML forms with validation, helpers, warnings and more!
 </html> 
 ```
 
-**Example Scripts**
+## 🎁 Installation
 
-<ul>
-<li>Basic usage: <strong>./examples/basic.php</strong></li>
-<li>Advanced usage: <strong>./examples/advanced.php</strong></li>
-<li>Center-aligned usage: <strong>./examples/centered.php</strong></li>
-</ul>
+This is a zero dependency library. Just drag `SimplePHPForm.php` into your project and `require('SimplePHPForm.php');`. 
 
-**Screenshot of Example**
+Optionally add the assets from `examples/css` and `examples/images`
+
+## 👁️ Examples + Screenshot
+
+* Basic usage: **./examples/basic.php**
+* Advanced usage: **./examples/advanced.php**
+* Center-aligned usage: **./examples/centered.php**
 
 <img src="http://i.imgur.com/PNtyxTl.png" alt="Simple PHP Form Example 1" />
 
