@@ -117,19 +117,14 @@ class SimplePHPForm
 		if(!is_string($name))
 		{
 			$output = '';
-
-			if ($name) {
-				$output .= $this->displayState();
-				$output .= '<form method="post" action="'.$this->url_action.'" class="simplephpform">';
-			}
+			$output .= $this->displayState();
+			$output .= '<form method="post" action="'.$this->url_action.'" class="simplephpform">';
 
 			foreach($this->input_list as $input)
 				$output .= $this->display($input->name)."\n";
 
-			if ($name) {
-				$output .= '<input type="submit" value="Submit Form" class="simplephpform_submit" />';
-				$output .= '</form>';
-			}
+			$output .= '<input type="submit" value="Submit Form" class="simplephpform_submit" />';
+			$output .= '</form>';
 
 			return $output;
 		}
